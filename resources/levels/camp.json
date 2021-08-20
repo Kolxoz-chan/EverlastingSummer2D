@@ -32,7 +32,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/tilesets\/tileset_01.tsx"
+         "source":"..\/tilesets\/tileset_01.json"
         }],
  "tilewidth":32,
  "type":"map",
