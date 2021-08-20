@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8" />
+		<title>Коллективный разум</title>
+
+		<script src="engine/constants.js"></script>
+		<script src="engine/objects.js"></script>
+		<script src="engine/gui.js"></script>
+		<script src="engine/loaders.js"></script>
+		<script src="engine/base_components.js"></script>
+		<script src="engine/transform_components.js"></script>
+		<script src="engine/drawable_components.js"></script>
+		<script src="engine/action_components.js"></script>
+		<script src="engine/colider_components.js"></script>
+		<script src="engine/mouse_components.js"></script>
+		<script src="custom_components.js"></script>
+		<script src="engine/engine.js"></script>
+	</head>
+	<body>
+		<div id="game-block"><div>
+
+		<script type="text/javascript">
+		/* --- Init game -------------------------------------------------------  */
+		Game.init("game-block");
+		Game.settings.style = "border: 1px solid black; background-color: black;"
+		Game.resetSettings()
+		Game.setEventHandlers(['mousedown', 'mouseup', "mousemove"])
+		Game.setSize(new Vector2(1000, 500))
+
+		/* --- Init prefabs -------------------------------------------------------  */
+
+		TiledLoader.loadLevel("camp")
+
+		/* --- Init entities -------------------------------------------------------  */
+		let ent = new MatrixEntity("ground_layer", new Vector2(10, 10))
+		ent.addComponent(new TransformComponent(), {"position" : new Vector2(100, 100)})
+		Game.addEntity(ent);
+
+		let cell = new Entity()
+		cell.addComponent(new RectShapeComponent(), {"line_width" : 0})
+		ent.setEntity(cell, new Vector2(0, 0));
+
+		cell = new Entity()
+		cell.addComponent(new RectShapeComponent(), {"line_width" : 0})
+		ent.setEntity(cell, new Vector2(1, 0));
+
+		cell = new Entity()
+		cell.addComponent(new RectShapeComponent(), {"line_width" : 0})
+		ent.setEntity(cell, new Vector2(0, 1));
+
+		/* --- Start game -------------------------------------------------------- */
+		Game.start();
+		</script>
+	</body>
+</html>
