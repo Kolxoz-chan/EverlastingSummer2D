@@ -66,7 +66,6 @@ class RectShapeComponent extends DrawableComponent
 
 	update()
 	{
-
 		if(this.opacity > 0.0)
 		{
 			/* Get data */
@@ -126,6 +125,7 @@ class CircleShapeComponent extends DrawableComponent
 class ImageComponent extends DrawableComponent
 {
 	texture = null;
+	rect = null;
 
 	init()
 	{
@@ -152,7 +152,15 @@ class ImageComponent extends DrawableComponent
 			this.applyTransformation()
 
 			/* Draw */
-			Game.context.drawImage(image, position.x, position.y, size.x, size.y);
+			if(this.rect) 
+			{
+				Game.context.drawImage(image, position.x, position.y, size.x, size.y);
+			}
+			else 
+			{
+				Game.context.drawImage(image, position.x, position.y, size.x, size.y, this.rect.x, this.rect.y, this.rect.w, this.rect.h);
+			}
+			
 			if(this.line_width > 0.0) Game.context.strokeRect(position.x, position.y, size.x, size.y);
 
 			/* Reset*/

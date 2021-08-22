@@ -29,26 +29,13 @@
 		Game.setSize(new Vector2(1000, 500))
 
 		/* --- Init prefabs -------------------------------------------------------  */
+		TiledLoader.resources_url = "https://kolxoz-chan.github.io/EverlastingSummer2D/resources/";
+		Resources.textures_dir = "https://kolxoz-chan.github.io/EverlastingSummer2D/resources/textures/"
 
-		TiledLoader.loadLevel("camp")
+		Game.addEntity(TiledLoader.loadLevel("camp"))
 
 		/* --- Init entities -------------------------------------------------------  */
-		let ent = new MatrixEntity("ground_layer", new Vector2(10, 10))
-		ent.addComponent(new TransformComponent(), {"position" : new Vector2(100, 100)})
-		Game.addEntity(ent);
-
-		let cell = new Entity()
-		cell.addComponent(new RectShapeComponent(), {"line_width" : 0})
-		ent.setEntity(cell, new Vector2(0, 0));
-
-		cell = new Entity()
-		cell.addComponent(new RectShapeComponent(), {"line_width" : 0})
-		ent.setEntity(cell, new Vector2(1, 0));
-
-		cell = new Entity()
-		cell.addComponent(new RectShapeComponent(), {"line_width" : 0})
-		ent.setEntity(cell, new Vector2(0, 1));
-
+		
 		/* --- Start game -------------------------------------------------------- */
 		Game.start();
 		</script>

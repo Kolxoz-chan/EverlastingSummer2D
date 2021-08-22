@@ -272,15 +272,29 @@ class Resources
 		}
 	}
 
-	static loadTexture(name, src)
+	static loadTexture(name, src, relative=true)
 	{
 		Resources.loading_counter++;
-		Resources.textures[name] = Resources.textures_dir + src;
+		Resources.textures[name] = new Image()
+		if(relative) src = Resources.textures_dir + src;
+		Resources.textures[name].src = src
 	}
 
 	static loadAudio(name, src)
 	{
 		Resources.sounds[name] = new Audio(Resources.sounds_dir + src);
+	}
+
+	static loadByURL(url, type = "text", func = function() {})
+	{
+		var xhr = new XMLHttpRequest(url);
+	    xhr.open('GET', url, true);
+	    xhr.responseType = type
+	    xhr.onload = function()
+	    {
+	        func(xhr.response)
+	    }
+	    xhr.send();
 	}
 
 	static addPrefab(asset)
