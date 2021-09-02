@@ -17,25 +17,67 @@
 		<script src="custom_components.js"></script>
 		<script src="engine/engine.js"></script>
 	</head>
-	<body>
+	<body style="margin: 0; overflow: hidden; background-color: black;">
 		<div id="game-block"><div>
 
 		<script type="text/javascript">
 		/* --- Init game -------------------------------------------------------  */
 		Game.init("game-block");
-		Game.settings.style = "border: 1px solid black; background-color: black;"
+		Game.settings.style = "margin: auto; display: block;"
 		Game.resetSettings()
-		Game.setEventHandlers(['mousedown', 'mouseup', "mousemove"])
-		Game.setSize(new Vector2(1000, 500))
+		Game.setEventHandlers(['keydown', 'keyup'])
+		Game.setSize(new Vector2(1280, 720))
 
 		/* --- Init prefabs -------------------------------------------------------  */
-		TiledLoader.resources_url = "https://kolxoz-chan.github.io/EverlastingSummer2D/resources/";
-		Resources.textures_dir = "https://kolxoz-chan.github.io/EverlastingSummer2D/resources/textures/"
+		//TiledLoader.resources_url = "https://kolxoz-chan.github.io/EverlastingSummer2D/resources/";
+		//Resources.textures_dir = "https://kolxoz-chan.github.io/EverlastingSummer2D/resources/textures/"
+		TiledLoader.resources_url = "resources/";
+		Resources.textures_dir = "resources/textures/"
 
-		Game.addEntity(TiledLoader.loadLevel("camp"))
+		Resources.loadTexture("ul", "ul.png")
 
-		/* --- Init entities -------------------------------------------------------  */
-		
+		TiledLoader.loadLevel("test", true)
+		TiledLoader.onLoaded = function(level)
+		{
+			setTimeout(() => 
+			{
+				Game.addEntity(level)
+				let layer = new Entity("objects")
+				layer.addComponent(new TransformComponent())
+				level.addChild(layer)
+
+				let ent = new Entity("item")
+				ent.addComponent(new TransformComponent(), {"position" : new Vector2(167, 200), "size" : new Vector2(20, 20)})
+				ent.addComponent(new RectShapeComponent(), {"fill_color" : new Color(255, 0, 0)})
+				ent.addComponent(new RectColiderComponent(), {"coliding" : false})
+				ent.addComponent(new ActorComponent(), {"text" : "Взять (E)"})
+				layer.addChild(ent)
+
+				ent = new Entity("house")
+				ent.addComponent(new TransformComponent(), {"position" : new Vector2(220, 200), "size" : new Vector2(200, 200)})
+				ent.addComponent(new RectShapeComponent(), {"fill_color" : new Color(255, 0, 0)})
+				ent.addComponent(new RectColiderComponent(), {"coliding" : false})
+				ent.addComponent(new SolidComponent())
+				layer.addChild(ent)
+
+				ent = new Entity("player")
+				ent.addComponent(new TransformComponent(), {"position" : new Vector2(100, 100), "size" : new Vector2(80, 160)})
+				ent.addComponent(new ImageComponent(), {"texture" : "ul"})
+				ent.addComponent(new CameraComponent())
+				ent.addComponent(new PlayerControlComponent())
+				ent.addComponent(new RectColiderComponent(), {"offset" : new Rect(0, 140, 0, 0)})
+				ent.addComponent(new SolidComponent())
+				ent.addComponent(new ActorsScanerComponent(), {"text_entity" : "action_indicator"})
+				layer.addChild(ent)
+
+				let indicator = new Entity("action_indicator")
+				indicator.addComponent(new TransformComponent(), {"position" : new Vector2(-10, -5)})
+				indicator.addComponent(new TextComponent(), {"font" : "bold 12px Arial", "line_width" : 2})
+				ent.addChild(indicator)
+
+			}, 1000)
+		}
+
 		/* --- Start game -------------------------------------------------------- */
 		Game.start();
 		</script>

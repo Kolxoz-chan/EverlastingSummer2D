@@ -11,6 +11,7 @@ class Game
 	static entities_named = {};
 
 	/* Objsect */
+	static offscreen = null
 	static context = null;
 	static canvas = null;
 	static block = null;
@@ -34,6 +35,10 @@ class Game
 		/* Init canvas*/
 		Game.canvas = document.createElement("canvas");
 		Game.context = Game.canvas.getContext("2d");
+
+		Game.canvas.offscreen = new OffscreenCanvas(0, 0);
+		Game.offscreen = Game.canvas.offscreen.getContext("2d");
+
 		Game.block = document.getElementById(id);
 		Game.block.appendChild(Game.canvas);
 	}
@@ -58,7 +63,7 @@ class Game
 		if(value)
 		{
 			Game.canvas.requestFullscreen();
-			if(Game.sittings.resizable)
+			if(Game.settings.resizable)
 			{
 				Game.setSize(Game.getMaxSize())
 			}
@@ -77,11 +82,19 @@ class Game
 		Game.entities.push(obj);
 		obj.reset();
 		obj.init();
+
+		return obj;
 	}
 
 	static resetCursor()
 	{
 		Game.setCursor(Game.default_cursor)
+	}
+
+	static resetOffscreen(size)
+	{
+		Game.canvas.offscreen.width = size.x
+		Game.canvas.offscreen.height = size.y
 	}
 
 	static setCursor(name)
@@ -117,18 +130,13 @@ class Game
 		if(Game.state != GAME_START)
 		{
 			Game.state = GAME_START;
-			setTimeout(() => {Game.loop()}, 1000 / Game.settings.fps);
+			requestAnimationFrame(Game.loop);
 		}
 	}
 
 	static stop()
 	{
 		Game.state = GAME_STOP;
-	}
-
-	static pause()
-	{
-		Game.state = GAME_PAUSE;
 	}
 
 	static loop()
@@ -139,23 +147,18 @@ class Game
 			Input.update()
 			Game.update()
 
-			setTimeout(() => {Game.loop()}, 1000 / Game.settings.fps);
+			requestAnimationFrame(Game.loop);
 		}
 	}
 
 	static update()
 	{
-		Game.context.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
+		Game.canvas.width = Game.canvas.width;
 
-		for(let i in Game.entities)
+		Game.entities.forEach(function(item)
 		{
-			if(Game.entities[i].isEnabled()) Game.entities[i].update()
-		}
-
-		for(let i in Game.widgets)
-		{
-			if(Game.widgets[i].isEnabled()) Game.widgets[i].update()
-		}
+			if(item.isEnabled()) item.update()
+		})
 	}
 }
 
@@ -211,13 +214,18 @@ class Camera
 		{
 			let center = Camera.getCenter()
 			let size = Camera.getSize();
-			Game.context.translate(-center.x + size.x / 2, -center.y + size.y / 2)
+			Game.context.translate(Math.round(-center.x + size.x / 2), Math.round(-center.y + size.y / 2))
 		}
 	}
 
 	static getSize()
 	{
 		return new Vector2(Game.canvas.width, Game.canvas.height)
+	}
+
+	static getRect()
+	{
+		return new Rect(this.position.x, this.position.y, Game.canvas.width, Game.canvas.height)
 	}
 }
 
@@ -272,12 +280,14 @@ class Resources
 		}
 	}
 
-	static loadTexture(name, src, relative=true)
+	static loadTexture(name, src, relative=true, func = null)
 	{
 		Resources.loading_counter++;
 		Resources.textures[name] = new Image()
+		Resources.textures[name].crossOrigin="anonymous"
 		if(relative) src = Resources.textures_dir + src;
 		Resources.textures[name].src = src
+		if(func) Resources.textures[name].onload = func;
 	}
 
 	static loadAudio(name, src)
@@ -301,6 +311,11 @@ class Resources
 	{
 		Resources.prefabs[asset.name] = asset;
 		return asset;
+	}
+
+	static addTexture(name, obj)
+	{
+		Resources.textures[name] = obj;
 	}
 
 	static getTexture(name)

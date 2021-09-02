@@ -12,7 +12,6 @@ class TransformComponent extends ComponentBase
 
 	update()
 	{
-		this.position = this.position.add(this.velocity);
 		this.velocity = new Vector2(0, 0);
 	}
 
@@ -29,6 +28,11 @@ class TransformComponent extends ComponentBase
 	setSize(vector)
 	{
 		this.size = vector;
+	}
+
+	getRect()
+	{
+		return new Rect(this.position.x, this.position.y, this.size.x, this.size.y)
 	}
 
 	setSizeType(type)
@@ -96,6 +100,7 @@ class TransformComponent extends ComponentBase
 	move(vector)
 	{
 		this.velocity = this.velocity.add(vector);
+		this.position = this.position.add(vector);
 	}
 
 	move_to(point, speed)
@@ -311,4 +316,3 @@ class GravityComponent extends ComponentBase
 		this.joined["TransformComponent"].move(this.vector.mul(Time.delta_time))
 	}
 }
-

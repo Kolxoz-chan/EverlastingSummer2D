@@ -91,9 +91,19 @@ class RadiusScannerComponent extends ComponentBase
 
 			if(obj != this.owner && distance <= this.radius && this.onRegister)
 			{
-				//console.log(this.onRegister)
 				this.onRegister(obj);
 			}
 		}
+	}
+}
+
+class ActorComponent extends ComponentBase
+{
+	key = "KeyE"
+	text = "action(E)"
+	// action = null
+	action()
+	{
+		this.owner.parent.deleteChild(this.owner)
 	}
 }

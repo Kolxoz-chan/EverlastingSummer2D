@@ -54,12 +54,15 @@ class Entity
 	update()
 	{
 		// Deleting childs
-		for(let i in this.delete_queue)
+		if(this.delete_queue.length)
 		{
-			let index = this.childs.indexOf(this.delete_queue[i])
-			this.childs.splice(index, 1)
+			for(let i in this.delete_queue)
+			{
+				let index = this.childs.indexOf(this.delete_queue[i])
+				this.childs.splice(index, 1)
+			}
+			this.delete_queue = []
 		}
-		this.delete_queue = []
 
 		// Update components
 		for(var key in this.components)
@@ -130,7 +133,12 @@ class Entity
 		{
 			if(this.childs[i].name == name) return this.entities[i];
 		}
-		return name
+		return null
+	}
+
+	getChildByIndex(index)
+	{
+		return this.childs[index]
 	}
 
 	isEnabled()
@@ -185,12 +193,15 @@ class MatrixEntity extends Entity
 	update()
 	{
 		// Deleting childs
-		for(let i in this.delete_queue)
+		if(this.delete_queue.length)
 		{
-			let index = this.childs.indexOf(this.delete_queue[i])
-			this.childs.splice(index, 1)
+			for(let i in this.delete_queue)
+			{
+				let index = this.childs.indexOf(this.delete_queue[i])
+				this.childs.splice(index, 1)
+			}
+			this.delete_queue = []
 		}
-		this.delete_queue = []
 
 		// Update components
 		for(var key in this.components)
@@ -202,14 +213,21 @@ class MatrixEntity extends Entity
 			}
 		}
 
-		// Update matrix
-		for(let x in this.matrix)
+		// Update matrix 
+		let rect = Camera.getRect().divVec(this.size).round()
+		for(let x=rect.x; x<rect.x + rect.w + 1; x++)
 		{
-			for(let y in this.matrix[x])
+			if(this.matrix[x])
 			{
-				if(this.matrix[x][y].isEnabled())
+				for(let y=rect.y; y<rect.y + rect.h + 1; y++)
 				{
-					this.matrix[x][y].update();
+					if(this.matrix[x][y])
+					{
+						if(this.matrix[x][y].isEnabled())
+						{
+							this.matrix[x][y].update();
+						}
+					}
 				}
 			}
 		}
@@ -417,6 +435,16 @@ class Rect
 		this.h = h
 	}
 
+	getPosition()
+	{
+		return new Vector2(this.x, this.y)
+	}
+
+	getSize()
+	{
+		return new Vector2(Math.abs(this.w), Math.abs(this.h))
+	}
+
 	leftTop()
 	{
 		return new Vector2(this.x, this.y)
@@ -435,6 +463,36 @@ class Rect
 	rightBottom()
 	{
 		return new Vector2(this.x + this.w, this.y + this.h)
+	}
+
+	left()
+	{
+		return this.x;
+	}
+
+	right()
+	{
+		return this.x + this.w;
+	}
+
+	top()
+	{
+		return this.y;
+	}
+
+	bottom()
+	{
+		return this.y + this.h;
+	}
+
+	divVec(vec)
+	{
+		return new Rect(this.x / vec.x, this.y / vec.y, this.w / vec.x, this.h / vec.y)
+	}
+
+	addRect(rect)
+	{
+		return new Rect(this.x + rect.x, this.y + rect.y, this.w + rect.w - rect.x, this.h + rect.h -rect.y)
 	}
 
 	isConteined(point)
@@ -461,6 +519,11 @@ class Rect
 		return rect.x == this.x && rect.y == this.y && rect.w == this.w && rect.h == this.h;
 	}
 
+	round()
+	{
+		return new Rect(~~this.x, ~~this.y, ~~this.w, ~~this.h)
+	}
+
 	isNullSize()
 	{
 		return this.w == 0 && this.h == 0;
@@ -478,10 +541,10 @@ class Rect
 			let A2 = rect.leftTop();
 			let B2 = rect.rightBottom();
 
-			result.x = A1.x > A2.x ? A1.x : A2.x
-			result.y = A1.y > A2.y ? A1.y : A2.y
-			result.w = B1.x < B2.x ? B1.x - A1.x : B2.x - A2.x
-			result.h = B1.y < B2.y ? B1.y - A1.y: B2.y - A2.y
+			result.x = Math.max(A1.x, A2.x);
+			result.y = Math.max(A1.y, A2.y);
+	        result.w = Math.min(B1.x, B2.x) - result.x;
+	        result.h = Math.min(B1.y, B2.y) - result.y;
 		}
 		return result;
 	}

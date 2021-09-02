@@ -30,17 +30,17 @@ class ColiderComponent extends ComponentBase
 		if(this.coliding)
 		{
 			this.objects = [];
-			let container = this.owner.getContainer()
-			for(let i in container.entities)
+			let container = this.owner.parent
+			for(let i in container.childs)
 			{
-				if(container.entities[i].hasComponent("ColiderComponent") && this.owner !== container.entities[i])
+				if(container.childs[i].hasComponent("ColiderComponent") && this.owner !== container.childs[i])
 				{
-					let colider = container.entities[i].getComponent("ColiderComponent")
+					let colider = container.childs[i].getComponent("ColiderComponent")
 					if(colider.isEnabled())
 					{
 						if(this.isIntersects(colider))
 						{
-							this.objects.push(container.entities[i])
+							this.objects.push(container.childs[i])
 						}
 					}
 				}
@@ -61,11 +61,7 @@ class RectColiderComponent extends ColiderComponent
 
 	getRect()
 	{
-		let transform_component = this.joined["TransformComponent"]
-		let position = transform_component.getPosition()
-		let size = transform_component.getSize()
-
-		return new Rect(position.x, position.y, size.x, size.y)
+		return this.joined["TransformComponent"].getRect().addRect(this.offset)
 	}
 
 	isContained(point)
@@ -103,10 +99,4 @@ class CircleColiderComponent extends ColiderComponent
 		let center = transform_component.getCenter();
 		return point.getDistance(center) <= this.radius;
 	}
-}
-
-/* Radius colider component*/
-class RadiusColiderComponent extends CircleColiderComponent
-{
-	name = "RadiusColiderComponent"
 }

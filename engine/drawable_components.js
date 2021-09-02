@@ -125,7 +125,7 @@ class CircleShapeComponent extends DrawableComponent
 class ImageComponent extends DrawableComponent
 {
 	texture = null;
-	rect = null;
+	line_width = 0.0;
 
 	init()
 	{
@@ -139,32 +139,29 @@ class ImageComponent extends DrawableComponent
 
 	update()
 	{
+		let transform_component = this.joined["TransformComponent"]
+		let rect = transform_component.getRect();
+		if(!Camera.getRect().isIntersects(rect)) return
+
 		if(this.texture && this.opacity > 0.0)
 		{
 			/* Get data */
-			let transform_component = this.joined["TransformComponent"]
-			let position = transform_component.getPosition()
-			let size = transform_component.getSize()
 			let image = Resources.getTexture(this.texture)
-
-			/* Settings */
-			this.applyStyles();
-			this.applyTransformation()
-
-			/* Draw */
-			if(this.rect) 
+			if(image)
 			{
-				Game.context.drawImage(image, position.x, position.y, size.x, size.y);
-			}
-			else 
-			{
-				Game.context.drawImage(image, position.x, position.y, size.x, size.y, this.rect.x, this.rect.y, this.rect.w, this.rect.h);
-			}
-			
-			if(this.line_width > 0.0) Game.context.strokeRect(position.x, position.y, size.x, size.y);
+				/* Settings */
+				//this.applyStyles();
+				this.applyTransformation()
 
-			/* Reset*/
-			Game.context.resetTransform();
+				/* Draw */
+				Game.context.drawImage(image, rect.x, rect.y);
+
+
+				//if(this.line_width > 0.0) Game.context.strokeRect(rect.x, rect.y, rect.w, rect.h);
+
+				/* Reset*/
+				Game.context.resetTransform();
+			}
 		}
 	}
 }
@@ -400,7 +397,7 @@ class BackgroundColorComponent extends ComponentBase
 		if(this.background)
 		{
 			let size = Camera.getSize();
-			
+
 			if(this.background.constructor.name == "Gradient") Game.context.fillStyle = this.background.get(Camera.getSize());
 			else Game.context.fillStyle = this.background;
 			Game.context.fillRect(0, 0, size.x, size.y);
@@ -413,7 +410,7 @@ class ParalaxComponent extends ComponentBase
 {
 	static AXIS_X = 1 << 0;
 	static AXIS_Y = 1 << 1;
-	
+
 	position = new Vector2(0.0, 0.0)
 	coef = new Vector2(1.0, 1.0)
 	repeating = 0
@@ -427,7 +424,7 @@ class ParalaxComponent extends ComponentBase
 			let size = Camera.getSize();
 			let img = Resources.getTexture(this.image)
 			pos = new Vector2((size.x - img.width) * this.position.x - pos.x * this.coef.x, (size.y - img.height) * this.position.y - pos.y * this.coef.y)
-			
+
 			Game.context.drawImage(img, pos.x, pos.y, img.width, img.height);
 		}
 	}
