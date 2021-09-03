@@ -214,12 +214,19 @@ class MatrixEntity extends Entity
 		}
 
 		// Update matrix 
-		let rect = Camera.getRect().divVec(this.size).round()
-		for(let x=rect.x; x<rect.x + rect.w + 1; x++)
+		let rect = Camera.getRect().divVec(this.size)
+
+		rect.x = Math.ceil(rect.x)
+		rect.y = Math.ceil(rect.y)
+		rect.w = Math.ceil(rect.x + rect.w);
+		rect.h = Math.ceil(rect.y + rect.h);
+
+		//alert(rect.x + " " + rect.y + " " + rect.w + " " + rect.h)
+		for(let x=rect.x - 1; x<rect.w; x++)
 		{
 			if(this.matrix[x])
 			{
-				for(let y=rect.y; y<rect.y + rect.h + 1; y++)
+				for(let y=rect.y - 1; y<rect.h; y++)
 				{
 					if(this.matrix[x][y])
 					{
@@ -231,6 +238,17 @@ class MatrixEntity extends Entity
 				}
 			}
 		}
+
+		/*for(let x in this.matrix)
+		{
+			for(let y in this.matrix[x])
+			{
+				if(this.matrix[x][y].isEnabled())
+				{
+					this.matrix[x][y].update();
+				}
+			}
+		}*/
 
 		// Update childs
 		for(let i in this.childs)

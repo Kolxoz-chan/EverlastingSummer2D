@@ -119,7 +119,7 @@ class TiledLoader
           {
             for(let i in data.layers)
             {
-              let layer = TiledLoader.loadChunkLayer(this, data.layers[i], data.tilewidth * data.layers[i].width, data.tileheight * data.layers[i].height)
+              let layer = TiledLoader.loadChunkLayer(this, data.layers[i], data.tilewidth * 16, data.tileheight * 16)
               level.addChild(layer)
             }
           }

@@ -46,7 +46,7 @@
 				layer.addComponent(new TransformComponent())
 				level.addChild(layer)
 
-				let ent = new Entity("item")
+			/*	let ent = new Entity("item")
 				ent.addComponent(new TransformComponent(), {"position" : new Vector2(167, 200), "size" : new Vector2(20, 20)})
 				ent.addComponent(new RectShapeComponent(), {"fill_color" : new Color(255, 0, 0)})
 				ent.addComponent(new RectColiderComponent(), {"coliding" : false})
@@ -59,7 +59,7 @@
 				ent.addComponent(new RectColiderComponent(), {"coliding" : false})
 				ent.addComponent(new SolidComponent())
 				layer.addChild(ent)
-
+			*/
 				ent = new Entity("player")
 				ent.addComponent(new TransformComponent(), {"position" : new Vector2(100, 100), "size" : new Vector2(80, 160)})
 				ent.addComponent(new ImageComponent(), {"texture" : "ul"})
