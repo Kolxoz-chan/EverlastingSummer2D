@@ -2,7 +2,8 @@
 <html lang="ru">
 	<head>
 		<meta charset="utf-8" />
-		<title>Коллективный разум</title>
+		<title>Everlasting Summer Stories</title>
+		<link rel="shortcut icon" href="./resources/textures/icon.png" type="image/png">
 
 		<script src="engine/constants.js"></script>
 		<script src="engine/objects.js"></script>
@@ -34,49 +35,13 @@
 		TiledLoader.resources_url = "resources/";
 		Resources.textures_dir = "resources/textures/"
 
-		Resources.loadTexture("ul", "ul.png")
-
-		TiledLoader.loadLevel("test", true)
+		let level = TiledLoader.loadLevel("test", true)
 		TiledLoader.onLoaded = function(level)
 		{
-			setTimeout(() => 
-			{
-				Game.addEntity(level)
-				let layer = new Entity("objects")
-				layer.addComponent(new TransformComponent())
-				level.addChild(layer)
-
-			/*	let ent = new Entity("item")
-				ent.addComponent(new TransformComponent(), {"position" : new Vector2(167, 200), "size" : new Vector2(20, 20)})
-				ent.addComponent(new RectShapeComponent(), {"fill_color" : new Color(255, 0, 0)})
-				ent.addComponent(new RectColiderComponent(), {"coliding" : false})
-				ent.addComponent(new ActorComponent(), {"text" : "Взять (E)"})
-				layer.addChild(ent)
-
-				ent = new Entity("house")
-				ent.addComponent(new TransformComponent(), {"position" : new Vector2(220, 200), "size" : new Vector2(200, 200)})
-				ent.addComponent(new RectShapeComponent(), {"fill_color" : new Color(255, 0, 0)})
-				ent.addComponent(new RectColiderComponent(), {"coliding" : false})
-				ent.addComponent(new SolidComponent())
-				layer.addChild(ent)
-			*/
-				ent = new Entity("player")
-				ent.addComponent(new TransformComponent(), {"position" : new Vector2(100, 100), "size" : new Vector2(80, 160)})
-				ent.addComponent(new ImageComponent(), {"texture" : "ul"})
-				ent.addComponent(new CameraComponent())
-				ent.addComponent(new PlayerControlComponent())
-				ent.addComponent(new RectColiderComponent(), {"offset" : new Rect(0, 140, 0, 0)})
-				ent.addComponent(new SolidComponent())
-				ent.addComponent(new ActorsScanerComponent(), {"text_entity" : "action_indicator"})
-				layer.addChild(ent)
-
-				let indicator = new Entity("action_indicator")
-				indicator.addComponent(new TransformComponent(), {"position" : new Vector2(-10, -5)})
-				indicator.addComponent(new TextComponent(), {"font" : "bold 12px Arial", "line_width" : 2})
-				ent.addChild(indicator)
-
-			}, 1000)
+			
 		}
+		Game.addEntity(level)
+
 
 		/* --- Start game -------------------------------------------------------- */
 		Game.start();

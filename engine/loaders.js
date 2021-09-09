@@ -2,6 +2,7 @@ class TiledLoader
 {
   static resources_url = "";
   static onLoaded = null;
+  static tilesize = new Vector2(0, 0);
 
   static loadMatrixLayer(info, width, height)
   {
@@ -24,7 +25,7 @@ class TiledLoader
             let tile = TiledLoader.tilesets[item-1]
 
             let entity = new Entity()
-            entity.addComponent(new ImageComponent(), {"texture" : tile.texture})
+            entity.addComponent("ImageComponent", {"texture" : tile.texture})
             layer.setEntity(entity, new Vector2(chunk.x + x, chunk.y + y))
           }
         }
@@ -34,7 +35,7 @@ class TiledLoader
     return layer;
   }
 
-  static loadChunkLayer(image, info, width, height)
+  static loadChunkLayer(info, width, height)
   {
     let vec = new Vector2(width, height);
     let layer = new MatrixEntity(info.name, vec);
@@ -46,7 +47,7 @@ class TiledLoader
       let name = info.name + "_chunk_" + chunk.x + "x" + chunk.y;
 
       let entity = new Entity()
-      entity.addComponent(new ImageComponent(), {"texture" : name})
+      entity.addComponent("ImageComponent", {"texture" : name})
       layer.setEntity(entity, new Vector2(chunk.x / chunk.width, chunk.y / chunk.height))
 
       Game.resetOffscreen(vec)
@@ -60,7 +61,9 @@ class TiledLoader
           if(item)
           {
             let tile = TiledLoader.tilesets[item-1]
-            Game.offscreen.drawImage(image, tile.rect.x, tile.rect.y, tile.rect.w, tile.rect.h,  x * tile.rect.w, y * tile.rect.h, tile.rect.w, tile.rect.h)
+            let pos = new Vector2(TiledLoader.tilesize.x * x, TiledLoader.tilesize.y * y)
+            //if(pos.y != 0) pos.y -= tile.rect.h;
+            Game.offscreen.drawImage(Resources.textures[tile.texture], pos.x, pos.y, tile.rect.w, tile.rect.h)
           }
         }
       }
@@ -70,10 +73,46 @@ class TiledLoader
     return layer;
   }
 
-  static loadTile(image, tile)
+  static loadObjectLayer(info)
+  {
+   let layer = new Entity(info.name)
+ 
+    for(let i in info.objects)
+    {
+      let obj = info.objects[i]
+      let tile = TiledLoader.tilesets[obj.gid - 1]
+      //alert(obj.width + "x" + obj.height)
+      let ent = new Entity(obj.name)
+      ent.addComponent("TransformComponent", {"position" : new Vector2(obj.x, obj.y - obj.height), "size" : new Vector2(obj.width, obj.height)});
+      ent.addComponent("ImageComponent", {"texture" : tile.texture});
+      for(let i in obj.properties)
+      {
+        let prop = obj.properties[i]
+        try
+        {
+        ent.addComponent(prop.name, TiledLoader.evalJSON(prop.value));
+        }
+        catch(err)
+        {
+          alert(err.stack)
+        }
+      }
+      layer.addChild(ent)
+    }
+
+    return layer
+  }
+
+  static evalJSON(code)
+  {
+    let x = eval("() => { return "+ code +"; }"); 
+    return x();
+  }
+
+  static loadTile(tile)
   {
     Game.resetOffscreen(tile.rect.getSize())
-    Game.offscreen.drawImage(image, tile.rect.x, tile.rect.y, tile.rect.w, tile.rect.h,  0, 0, tile.rect.w, tile.rect.h)
+    Game.offscreen.drawImage(Resources.textures[tile.name], tile.rect.x, tile.rect.y, tile.rect.w, tile.rect.h,  0, 0, tile.rect.w, tile.rect.h)
     Resources.addTexture(tile.texture, Game.canvas.offscreen.transferToImageBitmap());
   }
 
@@ -87,7 +126,7 @@ class TiledLoader
       for(let x=0; x<tileset.columns; x++)
       {
         let rect = new Rect(x * tileset.spacing + tileset.margin + x * tileset.tilewidth, y * tileset.spacing + tileset.margin + y * tileset.tileheight, tileset.tilewidth, tileset.tileheight)
-        TiledLoader.tilesets.push({"texture" : name + "_" + x + "x" + y, "rect" : rect})
+        TiledLoader.tilesets.push({"name" : name, "texture" : name + "_" + x + "x" + y, "rect" : rect})
       }
     }
   }
@@ -96,10 +135,13 @@ class TiledLoader
   {
     // Init level
     let level = new Entity(name)
-    TiledLoader.tilesets = []
+    TiledLoader.tilesets = [] 
 
     Resources.loadByURL(TiledLoader.resources_url + "levels/" + name + ".json", "json", function(data)
     {
+      let counter = data.tilesets.length
+      TiledLoader.tilesize = new Vector2(data.tilewidth, data.tileheight)
+
       // Loading tilesets
       for(let i in data.tilesets)
       {
@@ -107,36 +149,47 @@ class TiledLoader
         TiledLoader.loadTileset(tileset)
 
         // Load tiles
-        Resources.loadTexture(name, tileset.image.replace("..", TiledLoader.resources_url), false, function()
+        Resources.loadTexture(tileset.name, tileset.image.replace("..", TiledLoader.resources_url), false, function()
         {
-          for(let i in TiledLoader.tilesets)
+          // Loading data after loading tilesets
+          counter--;
+          if(counter <= 0)
           {
-            TiledLoader.loadTile(this, TiledLoader.tilesets[i])
-          }
+            for(let i in TiledLoader.tilesets)
+            {
+              TiledLoader.loadTile(TiledLoader.tilesets[i])
+            }
 
-          // Loading chunks
-          if(use_chunks)
-          {
+            // Loading layers
             for(let i in data.layers)
             {
-              let layer = TiledLoader.loadChunkLayer(this, data.layers[i], data.tilewidth * 16, data.tileheight * 16)
-              level.addChild(layer)
+              let layer = null;
+              let lay = data.layers[i]
+
+              if(lay.type == "tilelayer")
+              {
+                if(use_chunks)
+                {
+                  layer = TiledLoader.loadChunkLayer(lay, TiledLoader.tilesize.x * 16, TiledLoader.tilesize.y * 16)
+                }
+                else
+                {
+                  layer = TiledLoader.loadMatrixLayer(lay, TiledLoader.tilesize.x, TiledLoader.tilesize.y)
+                }
+              }
+              else if(lay.type == "objectgroup")
+              {
+                layer = TiledLoader.loadObjectLayer(lay)
+              }
+
+              if(layer) level.addChild(layer)
             }
+
+            // Callback
+            if(TiledLoader.onLoaded) TiledLoader.onLoaded(level)
           }
         })
       }
-
-      // Loading layers
-      if(!use_chunks)
-      {
-        for(let i in data.layers)
-        {
-          let layer = TiledLoader.loadMatrixLayer(data.layers[i], data.tilewidth, data.tileheight)
-          level.addChild(layer)
-        }
-      }
-
-      if(TiledLoader.onLoaded) TiledLoader.onLoaded(level)
     })
 
     return level;

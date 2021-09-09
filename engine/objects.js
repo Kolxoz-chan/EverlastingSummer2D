@@ -81,15 +81,15 @@ class Entity
 		}
 	}
 
-	addComponent(value, data={})
+	addComponent(name, data={})
 	{
-		let name = value.constructor.name
-		if(value.name.length > 0) name = value.name;
+		let component = eval("new " + name + "()")
+		if(component.name.length > 0) name = component.name;
 
-		this.components[name] = value;
-		value.setOwner(this);
-		value.setData(data);
-		return value;
+		this.components[name] = component;
+		component.setOwner(this);
+		component.setData(data);
+		return component;
 	}
 
 	addChild(obj)
@@ -172,7 +172,7 @@ class MatrixEntity extends Entity
 		}
 		else
 		{
-			obj.addComponent(new TransformComponent(), {"position" : vec.mulVec(this.size), "size" : this.size})
+			obj.addComponent("TransformComponent", {"position" : vec.mulVec(this.size), "size" : this.size})
 		}
 
 		this.matrix[vec.x][vec.y] = obj

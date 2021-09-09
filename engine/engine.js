@@ -141,13 +141,20 @@ class Game
 
 	static loop()
 	{
-		if(Game.state == GAME_START)
+		try
 		{
-			Time.update()
-			Input.update()
-			Game.update()
+			if(Game.state == GAME_START)
+			{
+				Time.update()
+				Input.update()
+				Game.update()
 
-			requestAnimationFrame(Game.loop);
+				requestAnimationFrame(Game.loop);
+			}
+		}
+		catch(error)
+		{
+			alert(error.stack)
 		}
 	}
 

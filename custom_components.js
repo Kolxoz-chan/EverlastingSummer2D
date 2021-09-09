@@ -177,7 +177,7 @@ class SolidComponent extends ComponentBase
 	}
 }
 
-class ActorsScanerComponent extends ComponentBase
+class TriggerReactorComponent extends ComponentBase
 {
 	text_entity = null
 
@@ -192,7 +192,7 @@ class ActorsScanerComponent extends ComponentBase
 
 		let component = null
 		let ent = Game.entities_named[this.text_entity];
-		
+
 		if(ent)
 		{
 			if(this.text_entity)
@@ -207,7 +207,7 @@ class ActorsScanerComponent extends ComponentBase
 
 		for(let i in objects)
 		{
-			if(objects[i].hasComponent("ActorComponent"))
+			if(objects[i].hasComponent("TriggerComponent"))
 			{
 				let actor = objects[i].getComponent("ActorComponent")
 				if(component)
@@ -215,7 +215,34 @@ class ActorsScanerComponent extends ComponentBase
 					component.text = actor.text
 					component.setEnabled(true)
 				}
-				if(actor.action && Input.isKeyPressed(actor.key)) actor.action(this)
+				if(actor.action) actor.action(this)
+			}
+		}
+	}
+}
+
+class SortingComponent extends ComponentBase
+{
+	init()
+	{
+		this.join("TransformComponent")
+	}
+
+	update()
+	{
+		let rect_a = this.joined["TransformComponent"].getRect();
+		let objects = this.owner.parent.childs;
+		let index = objects.indexOf(this.owner)
+
+		for(let i in objects)
+		{
+			let obj = objects[i]
+			let rect_b = obj.getComponent("TransformComponent").getRect();
+			if((rect_a.bottom() < rect_b.bottom() && index > i) || (rect_a.bottom() > rect_b.bottom() && index < i))
+			{
+				objects[i] = objects[index]
+				objects[index] = obj
+				index = i
 			}
 		}
 	}

@@ -1,24 +1,4 @@
-/* Trigger component */
-class TriggerComonent extends ComponentBase
-{
-	//action = null;
-
-	init()
-	{
-		this.join("ColiderComponent")
-	}
-
-	update()
-	{
-		let colider = this.joined["ColiderComponent"];
-		for(let i in colider.objects)
-		{
-			if(this.action) this.action(colider.objects[i])
-		}
-	}
-}
-
-/* Timer component */
+/* Timer component*/
 class TimerComponent extends ComponentBase
 {
 	enabled = true;
@@ -97,11 +77,11 @@ class RadiusScannerComponent extends ComponentBase
 	}
 }
 
-class ActorComponent extends ComponentBase
+class TriggerComponent extends ComponentBase
 {
-	key = "KeyE"
-	text = "action(E)"
+	name = "TriggerComponent"
 	// action = null
+
 	action()
 	{
 		this.owner.parent.deleteChild(this.owner)
