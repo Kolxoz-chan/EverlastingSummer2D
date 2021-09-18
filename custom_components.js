@@ -95,7 +95,7 @@ class PlayerControlComponent extends ComponentBase
 		if(Input.isKeysPressed(this.controls["GoBack"])) transform_component.move(new Vector2(0, speed));
 		if(Input.isKeysPressed(this.controls["GoLeft"])) transform_component.move(new Vector2(-speed, 0));
 		if(Input.isKeysPressed(this.controls["GoRight"])) transform_component.move(new Vector2(speed, 0));
-		if(Input.isKeysPressed(["KeyQ"])) Game.setFullScreen(true);
+		//if(Input.isKeysPressed(["KeyQ"])) Game.setFullScreen(true);
 	}
 }
 
@@ -179,7 +179,7 @@ class SolidComponent extends ComponentBase
 
 class TriggerReactorComponent extends ComponentBase
 {
-	text_entity = null
+	indicator = null;
 
 	init()
 	{
@@ -190,31 +190,26 @@ class TriggerReactorComponent extends ComponentBase
 	{
 		let objects = this.joined["ColiderComponent"].objects
 
-		let component = null
-		let ent = Game.entities_named[this.text_entity];
-
-		if(ent)
-		{
-			if(this.text_entity)
-			{
-				if(ent.hasComponent("DrawableComponent"))
-				{
-					component = ent.getComponent("DrawableComponent")
-					component.setEnabled(false)
-				}
-			}
-		}
-
 		for(let i in objects)
 		{
 			if(objects[i].hasComponent("TriggerComponent"))
 			{
-				let actor = objects[i].getComponent("ActorComponent")
-				if(component)
+				let trigger = objects[i].getComponent("TriggerComponent")
+				if(this.indicator)
 				{
-					component.text = actor.text
-					component.setEnabled(true)
+					let obj = Game.entities_named[this.indicator];
+					if(obj)
+					{
+						if(obj.hasComponent("DrawableComponent"))
+						{
+							let component = obj.getComponent("DrawableComponent")
+							if(trigger.hint) component.text = trigger.hint
+							component.redraw();
+						}
+					}
 				}
+
+				let actor = objects[i].getComponent("TriggerComponent")
 				if(actor.action) actor.action(this)
 			}
 		}
@@ -230,6 +225,7 @@ class SortingComponent extends ComponentBase
 
 	update()
 	{
+		let a, b;
 		let rect_a = this.joined["TransformComponent"].getRect();
 		let objects = this.owner.parent.childs;
 		let index = objects.indexOf(this.owner)
@@ -240,10 +236,27 @@ class SortingComponent extends ComponentBase
 			let rect_b = obj.getComponent("TransformComponent").getRect();
 			if((rect_a.bottom() < rect_b.bottom() && index > i) || (rect_a.bottom() > rect_b.bottom() && index < i))
 			{
-				objects[i] = objects[index]
-				objects[index] = obj
-				index = i
+				this.owner.parent.swap(i, index);
 			}
+		}
+	}
+}
+
+class ItemTriggerComponent extends TriggerComponent
+{
+	hint = "Взять?"
+	auto = false
+
+	init()
+	{
+		this.join("TransformComponent")
+	}
+
+	action()
+	{
+		if(Input.isKeyClicked("KeyE") || this.auto)
+		{
+			this.owner.parent.deleteChild(this.owner)
 		}
 	}
 }

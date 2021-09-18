@@ -88,14 +88,7 @@ class TiledLoader
       for(let i in obj.properties)
       {
         let prop = obj.properties[i]
-        try
-        {
-        ent.addComponent(prop.name, TiledLoader.evalJSON(prop.value));
-        }
-        catch(err)
-        {
-          alert(err.stack)
-        }
+        ent.addComponent(prop.name, prop.value.length > 0 ? TiledLoader.evalJSON(prop.value) : {});
       }
       layer.addChild(ent)
     }
@@ -105,8 +98,16 @@ class TiledLoader
 
   static evalJSON(code)
   {
-    let x = eval("() => { return "+ code +"; }"); 
-    return x();
+    try
+    {
+      let x = eval("() => { return "+ code +"; }"); 
+      return x();
+    }
+    catch(err)
+    {
+      alert(err.stack)
+      return {};
+    }
   }
 
   static loadTile(tile)

@@ -15,9 +15,9 @@ class TransformComponent extends ComponentBase
 		this.velocity = new Vector2(0, 0);
 	}
 
-	setPosition(x, y)
+	setPosition(vec)
 	{
-		this.position = new Vector2(x, y);
+		this.position = vec;
 	}
 
 	setPositionType(type)
@@ -68,11 +68,12 @@ class TransformComponent extends ComponentBase
 			}
 		}
 
-		if(this.position_type == VALUE_TILE)
+		if(this.position_type == VALUE_RELATIVE)
 		{
-			pos = pos.mulVec(this.getSize())
+			let size = this.getSize().invert()
+			vec = Camera.getPosition()
+			vec = vec.add(pos.mulVec(Camera.getSize().add(new Vector2(size.x, size.y * 2))))
 		}
-
 		return pos.add(vec);
 	}
 

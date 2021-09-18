@@ -82,21 +82,21 @@
         {
          "chunks":[
                 {
-                 "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 0, 0, 0, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 24, 24, 24, 24, 24, 24, 24, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0],
+                 "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 34, 34, 34, 0, 0, 34, 34, 34, 34, 34, 34, 34, 0, 0, 0, 49, 49, 49, 49, 0, 0, 49, 49, 49, 49, 49, 49, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 24, 24, 24, 24, 24, 24, 24, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0],
                  "height":16,
                  "width":16,
                  "x":-16,
                  "y":-16
                 }, 
                 {
-                 "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35],
+                 "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 34, 34, 34, 34, 34, 34, 0, 0, 34, 34, 34, 34, 34, 0, 0, 49, 49, 49, 49, 49, 49, 49, 0, 0, 49, 49, 49, 49, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35],
                  "height":16,
                  "width":16,
                  "x":0,
                  "y":-16
                 }, 
                 {
-                 "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 34, 34, 34, 34, 34, 34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 49, 49, 49, 49, 49, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 24, 24, 24, 24, 24, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                 "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 34, 0, 0, 34, 34, 34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 49, 0, 0, 49, 49, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 24, 24, 24, 24, 24, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                  "height":16,
                  "width":16,
                  "x":16,
@@ -200,17 +200,17 @@
                  "gid":102,
                  "height":160,
                  "id":3,
-                 "name":"",
+                 "name":"actor",
                  "properties":[
                         {
                          "name":"CameraComponent",
                          "type":"string",
-                         "value":"{}"
+                         "value":""
                         }, 
                         {
                          "name":"PlayerControlComponent",
                          "type":"string",
-                         "value":"{}"
+                         "value":""
                         }, 
                         {
                          "name":"RectColiderComponent",
@@ -220,19 +220,24 @@
                         {
                          "name":"SolidComponent",
                          "type":"string",
-                         "value":"{}"
+                         "value":""
                         }, 
                         {
                          "name":"SortingComponent",
                          "type":"string",
-                         "value":"{}"
+                         "value":""
+                        }, 
+                        {
+                         "name":"TriggerReactorComponent",
+                         "type":"string",
+                         "value":"{\"indicator\" : \"action_button\"}"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":80,
                  "x":320,
-                 "y":512
+                 "y":448
                 }, 
                 {
                  "gid":101,
@@ -267,6 +272,11 @@
                          "name":"PathMovingComponent",
                          "type":"string",
                          "value":"{\"speed\" : 100, \"path\" : [new Vector2(-125, -180), new Vector2(700, -180), new Vector2(700, 700), new Vector2(-125, 700)]}"
+                        }, 
+                        {
+                         "name":"SortingComponent",
+                         "type":"string",
+                         "value":""
                         }],
                  "rotation":0,
                  "type":"",
@@ -274,6 +284,259 @@
                  "width":80,
                  "x":-128,
                  "y":704
+                }, 
+                {
+                 "gid":12,
+                 "height":64,
+                 "id":13,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":"{}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":-64,
+                 "y":320
+                }, 
+                {
+                 "gid":12,
+                 "height":64,
+                 "id":24,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":"{}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":448,
+                 "y":768
+                }, 
+                {
+                 "gid":12,
+                 "height":64,
+                 "id":25,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":"{}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":704,
+                 "y":448
+                }, 
+                {
+                 "gid":12,
+                 "height":64,
+                 "id":26,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":"{}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":64,
+                 "y":960
+                }, 
+                {
+                 "gid":12,
+                 "height":64,
+                 "id":27,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":"{}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":768,
+                 "y":1088
+                }, 
+                {
+                 "gid":12,
+                 "height":64,
+                 "id":28,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":"{}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":-192,
+                 "y":1088
+                }, 
+                {
+                 "gid":12,
+                 "height":64,
+                 "id":29,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":"{}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":192,
+                 "y":640
+                }, 
+                {
+                 "gid":103,
+                 "height":640,
+                 "id":33,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }, 
+                        {
+                         "name":"SolidComponent",
+                         "type":"string",
+                         "value":"SolidComponent"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":384,
+                 "x":-704,
+                 "y":-576
+                }, 
+                {
+                 "gid":103,
+                 "height":640,
+                 "id":37,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }, 
+                        {
+                         "name":"SolidComponent",
+                         "type":"string",
+                         "value":"SolidComponent"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":384,
+                 "x":-128,
+                 "y":-576
+                }, 
+                {
+                 "gid":103,
+                 "height":640,
+                 "id":38,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }, 
+                        {
+                         "name":"SolidComponent",
+                         "type":"string",
+                         "value":"SolidComponent"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":384,
+                 "x":448,
+                 "y":-576
+                }, 
+                {
+                 "gid":103,
+                 "height":640,
+                 "id":39,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":"{\"coliding\" : false}"
+                        }, 
+                        {
+                         "name":"SolidComponent",
+                         "type":"string",
+                         "value":"SolidComponent"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":384,
+                 "x":1023,
+                 "y":-576
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -282,7 +545,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":9,
+ "nextobjectid":40,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
@@ -326,6 +589,19 @@
          "tilecount":1,
          "tileheight":160,
          "tilewidth":80
+        }, 
+        {
+         "columns":1,
+         "firstgid":103,
+         "image":"..\/textures\/tilesets\/camp_houses.png",
+         "imageheight":640,
+         "imagewidth":384,
+         "margin":0,
+         "name":"camp_houses",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":640,
+         "tilewidth":384
         }],
  "tilewidth":64,
  "type":"map",

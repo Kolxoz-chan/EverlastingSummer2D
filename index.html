@@ -38,9 +38,13 @@
 		let level = TiledLoader.loadLevel("test", true)
 		TiledLoader.onLoaded = function(level)
 		{
-			
+			let action_butt = new Entity("action_button")
+			action_butt.addComponent("TransformComponent", {"position" : new Vector2(5, -30)})
+			action_butt.addComponent("TextComponent", {"font" : "16px Arial", "autodraw" : false})
+			Game.entities_named["actor"].addChild(action_butt)
+
+			Game.addEntity(level)
 		}
-		Game.addEntity(level)
 
 
 		/* --- Start game -------------------------------------------------------- */

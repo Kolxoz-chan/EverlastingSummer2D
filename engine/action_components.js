@@ -80,10 +80,7 @@ class RadiusScannerComponent extends ComponentBase
 class TriggerComponent extends ComponentBase
 {
 	name = "TriggerComponent"
+	//hint = null
+	auto = true;
 	// action = null
-
-	action()
-	{
-		this.owner.parent.deleteChild(this.owner)
-	}
 }

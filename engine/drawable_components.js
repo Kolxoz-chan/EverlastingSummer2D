@@ -6,6 +6,8 @@ class DrawableComponent extends ComponentBase
 	stroke_color = new Color(0, 0, 0)
 	line_width = 1.0;
 	opacity = 1.0;
+	autodraw = true;
+	is_drawn = false;
 
 	getOpacity()
 	{
@@ -30,6 +32,37 @@ class DrawableComponent extends ComponentBase
 	setOpacity(value)
 	{
 		this.opacity = value
+	}
+
+	isVisible()
+	{
+		return this.opacity > 0.0;
+	}
+
+	redraw()
+	{
+		this.is_drawn = true;
+	}
+
+	update()
+	{
+		if(this.isVisible() && (this.autodraw || this.is_drawn))
+		{
+			/* Get data */
+			let transform_component = this.joined["TransformComponent"]
+			let position = transform_component.getPosition()
+			let size = transform_component.getSize()
+
+			/* Settings */
+			this.applyStyles();
+			this.applyTransformation()
+
+			this.draw(position, size);
+
+			/* Reset*/
+			Game.context.resetTransform();
+			this.is_drawn = false;
+		}
 	}
 
 	applyStyles()
@@ -64,26 +97,10 @@ class RectShapeComponent extends DrawableComponent
 		this.join("TransformComponent")
 	}
 
-	update()
+	draw(position, size)
 	{
-		if(this.opacity > 0.0)
-		{
-			/* Get data */
-			let transform_component = this.joined["TransformComponent"]
-			let position = transform_component.getPosition()
-			let size = transform_component.getSize()
-
-			/* Settings */
-			this.applyStyles();
-			this.applyTransformation()
-
-			/* Draw */
-			Game.context.fillRect(position.x, position.y, size.x, size.y);
-			if(this.line_width > 0.0) Game.context.strokeRect(position.x, position.y, size.x, size.y);
-
-			/* Reset*/
-			Game.context.resetTransform();
-		}
+		Game.context.fillRect(position.x, position.y, size.x, size.y);
+		if(this.line_width > 0.0) Game.context.strokeRect(position.x, position.y, size.x, size.y);
 	}
 }
 
@@ -95,29 +112,12 @@ class CircleShapeComponent extends DrawableComponent
 		this.join("TransformComponent")
 	}
 
-	update()
+	draw(position, size)
 	{
-
-		if(this.opacity > 0.0)
-		{
-			/* Get data */
-			let transform_component = this.joined["TransformComponent"]
-			let position = transform_component.getPosition()
-			let size = transform_component.getSize()
-
-			/* Settings */
-			this.applyStyles();
-			this.applyTransformation()
-
-			/* Draw */
-			Game.context.beginPath();
-			Game.context.ellipse(position.x, position.y, size.x/2, size.y/2, Math.PI, 0, Math.PI * 2, true);
-			Game.context.fill();
-			Game.context.stroke();
-
-			/* Reset*/
-			Game.context.resetTransform();
-		}
+		Game.context.beginPath();
+		Game.context.ellipse(position.x, position.y, size.x/2, size.y/2, Math.PI, 0, Math.PI * 2, true);
+		Game.context.fill();
+		Game.context.stroke();
 	}
 }
 
@@ -137,31 +137,18 @@ class ImageComponent extends DrawableComponent
 		}
 	}
 
-	update()
+	isVisible()
 	{
-		let transform_component = this.joined["TransformComponent"]
-		let rect = transform_component.getRect();
-		if(!Camera.getRect().isIntersects(rect)) return
+		return this.texture && this.opacity > 0.0
+	}
 
-		if(this.texture && this.opacity > 0.0)
+	draw(position, size)
+	{
+		let image = Resources.getTexture(this.texture)
+		if(image)
 		{
-			/* Get data */
-			let image = Resources.getTexture(this.texture)
-			if(image)
-			{
-				/* Settings */
-				//this.applyStyles();
-				this.applyTransformation()
-
-				/* Draw */
-				Game.context.drawImage(image, rect.x, rect.y);
-
-
-				//if(this.line_width > 0.0) Game.context.strokeRect(rect.x, rect.y, rect.w, rect.h);
-
-				/* Reset*/
-				Game.context.resetTransform();
-			}
+			Game.context.drawImage(image, position.x, position.y);
+			//if(this.line_width > 0.0) Game.context.strokeRect(rect.x, rect.y, rect.w, rect.h);
 		}
 	}
 }
@@ -170,43 +157,32 @@ class ImageComponent extends DrawableComponent
 class TextComponent extends DrawableComponent
 {
 	text = "";
-	font = null
+	font = "14px Arial"
 	outline = true;
 
 	init()
 	{
 		let transform = this.join("TransformComponent")
-		if(!transform.size)
-		{
-			this.applyStyles();
-			let metrics = Game.context.measureText(this.text);
-			transform.setSize(new Vector2(metrics.width, metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent))
-		}
+		this.applyStyles();
+
+		Game.context.font = this.font;
+		let metrics = Game.context.measureText(this.text);
+		transform.setSize(new Vector2(metrics.width, metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent))
+		//transform.setPosition(transform.getPosition().add(new Vector2(0, size.y)))
 	}
 
-	update()
+	isVisible()
 	{
-		if(this.text.length && this.opacity > 0.0 && this.font)
-		{
-			/* Get data */
-			let transform_component = this.joined["TransformComponent"]
-			let position = transform_component.getPosition()
-			let size = transform_component.getSize()
-
-			/* Settings */
-			this.applyStyles();
-			this.applyTransformation()
-
-			/* Draw */
-			Game.context.font = this.font;
-			if(this.outline) Game.context.strokeText(this.text, position.x, position.y);
-			Game.context.fillText(this.text, position.x, position.y);
-
-			/* Reset*/
-			Game.context.resetTransform();
-		}
+		return this.text.length && this.opacity > 0.0 && this.font;
 	}
-}
+
+	draw(position, size)
+	{
+		Game.context.font = this.font;
+		if(this.outline) Game.context.strokeText(this.text, position.x, position.y + size.y);
+		Game.context.fillText(this.text, position.x, position.y + size.y);
+	}
+}   
 
 /* Polygon component */
 class PolygonComponent extends DrawableComponent
@@ -237,34 +213,22 @@ class PolygonComponent extends DrawableComponent
 		this.points[index] = point;
 	}
 
-	update()
+	isVisible()
 	{
-		if(this.opacity > 0 && this.points.length > 0)
+		return this.opacity > 0 && this.points.length > 0
+	}
+
+	draw(position, size)
+	{
+		Game.context.beginPath();
+		Game.context.moveTo(this.points[0].x, this.points[0].y);
+		for(let i=1; i<this.points.length; i++)
 		{
-			/* Get data */
-/*			let transform_component = this.joined["TransformComponent"]
-			let position = transform_component.getPosition()
-			let size = transform_component.getSize()
-			*/
-
-			/* Settings */
-			this.applyStyles();
-			//this.applyTransformation()
-
-			/* Draw */
-			Game.context.beginPath();
-			Game.context.moveTo(this.points[0].x, this.points[0].y);
-			for(let i=1; i<this.points.length; i++)
-			{
-				Game.context.lineTo(this.points[i].x, this.points[i].y);
-			}
-			if(this.closed) Game.context.closePath();
-			Game.context.fill();
-			Game.context.stroke();
-
-			/* Reset*/
-			Game.context.resetTransform();
+			Game.context.lineTo(this.points[i].x, this.points[i].y);
 		}
+		if(this.closed) Game.context.closePath();
+		Game.context.fill();
+		Game.context.stroke();
 	}
 }
 
@@ -340,7 +304,7 @@ class SplineComponent extends PolygonComponent
 
 	update()
 	{
-		if(this.opacity > 0  && this.points.length > 0)
+		if(this.isVisible())
 		{
 			/* Get data */
 /*			let transform_component = this.joined["TransformComponent"]
@@ -387,7 +351,7 @@ class SplineComponent extends PolygonComponent
 	}
 }
 
-/* BackgroundColorComponent */
+/* BackgroundColorComponent 
 class BackgroundColorComponent extends ComponentBase
 {
 	background = null
@@ -405,7 +369,6 @@ class BackgroundColorComponent extends ComponentBase
 	}
 }
 
-/* BackgroundColorComponent */
 class ParalaxComponent extends ComponentBase
 {
 	static AXIS_X = 1 << 0;
@@ -429,3 +392,4 @@ class ParalaxComponent extends ComponentBase
 		}
 	}
 }
+*/

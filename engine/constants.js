@@ -10,7 +10,6 @@ const GAME_STOP = 			3;
 const VALUE_ABSOLUTE = 		1;
 const VALUE_RELATIVE = 		2;
 const VALUE_INVERTED = 		3;
-const VALUE_TILE = 			4; // position only
 
 /* Direction constants */
 const DIRECTION_TOP = 		1 << 0;

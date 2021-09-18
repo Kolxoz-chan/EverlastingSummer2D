@@ -15,6 +15,7 @@ class Game
 	static context = null;
 	static canvas = null;
 	static block = null;
+	static text = null;
 
 	/* Game state */
 	static state = NULL;
@@ -38,6 +39,8 @@ class Game
 
 		Game.canvas.offscreen = new OffscreenCanvas(0, 0);
 		Game.offscreen = Game.canvas.offscreen.getContext("2d");
+
+		Game.text = document.createElement("span")
 
 		Game.block = document.getElementById(id);
 		Game.block.appendChild(Game.canvas);
@@ -106,6 +109,7 @@ class Game
 	{
 		Game.canvas.width = size.x;
 		Game.canvas.height = size.y;
+		Camera.setSize(size)
 	}
 
 	static getObject(name)
@@ -148,6 +152,7 @@ class Game
 				Time.update()
 				Input.update()
 				Game.update()
+				Camera.update()
 
 				requestAnimationFrame(Game.loop);
 			}
@@ -186,9 +191,25 @@ class Time
 /* Camera class */
 class Camera
 {
+	static size = new Vector2(0, 0); 
 	static position = new Vector2(0, 0);
 	static angle = 0;
-	static zoom = 1.0
+	static zoom = 1.0;
+	static updated = false;
+	static data = {}
+
+	static update()
+	{
+		if(Camera.updated)
+		{
+			for(let i in Camera.data)
+			{
+				Camera[i] = Camera.data[i]
+			}
+			Camera.data = {}
+			Camera.updated = false;
+		}
+	}
 
 	static getCenter()
 	{
@@ -205,13 +226,19 @@ class Camera
 
 	static setPosition(point)
 	{
-		Camera.position = point;
+		Camera.data.position = point;
+		Camera.updated = true;
 	}
 
 	static setCenter(point)
 	{
 		let size = Camera.getSize();
 		Camera.setPosition(new Vector2(point.x - size.x / 2, point.y - size.y / 2))
+	}
+
+	static setSize(vec)
+	{
+		Camera.data.size = vec;
 	}
 
 
@@ -221,13 +248,13 @@ class Camera
 		{
 			let center = Camera.getCenter()
 			let size = Camera.getSize();
-			Game.context.translate(Math.round(-center.x + size.x / 2), Math.round(-center.y + size.y / 2))
+			Game.context.translate(-center.x + size.x / 2, -center.y + size.y / 2)
 		}
 	}
 
 	static getSize()
 	{
-		return new Vector2(Game.canvas.width, Game.canvas.height)
+		return Camera.size;
 	}
 
 	static getRect()

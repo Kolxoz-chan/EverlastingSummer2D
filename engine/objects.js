@@ -34,6 +34,7 @@ class Entity
 	components = {};
 	childs = []
 	delete_queue = []
+	swap_queue = []
 	// onUpdate = null;
 
 	constructor(name = null)
@@ -51,8 +52,27 @@ class Entity
 		for(var key in this.components) this.components[key].reset();
 	}
 
+	swap(a, b)
+	{
+		this.swap_queue.push([a, b])
+	}
+
 	update()
 	{
+		// Swap childs
+		if(this.swap_queue.length)
+		{
+			for(let i in this.swap_queue)
+			{
+				let pair = this.swap_queue[i]
+
+				let a = this.childs[pair[0]]
+				this.childs[pair[0]] = this.childs[pair[1]]
+				this.childs[pair[1]] = a;
+			}
+			this.swap_queue = []
+		}
+
 		// Deleting childs
 		if(this.delete_queue.length)
 		{
@@ -75,9 +95,12 @@ class Entity
 		}
 
 		// Update childs
-		for(let i in this.childs)
+		if(this.childs)
 		{
-			if(this.childs[i].isEnabled()) this.childs[i].update();
+			for(let i in this.childs)
+			{
+				if(this.childs[i].isEnabled()) this.childs[i].update();
+			}
 		}
 	}
 
@@ -213,7 +236,7 @@ class MatrixEntity extends Entity
 			}
 		}
 
-		// Update matrix 
+		// Update matrix
 		let rect = Camera.getRect().divVec(this.size)
 
 		rect.x = Math.ceil(rect.x)
