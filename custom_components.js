@@ -102,10 +102,17 @@ class PlayerControlComponent extends ComponentBase
 /* Solid Component */
 class SolidComponent extends ComponentBase
 {
+	offset = new Rect(0, 0, 0, 0)
+
 	init()
 	{
 		this.join("TransformComponent")
 		this.join("ColiderComponent")
+	}
+
+	getRect()
+	{
+		return this.joined["ColiderComponent"].getRect().addRect(this.offset);
 	}
 
 	update()
@@ -116,8 +123,8 @@ class SolidComponent extends ComponentBase
 			let obj = objects[i]
 			if(!obj.hasComponent("SolidComponent")) continue;
 
-			let rect_a = this.joined["ColiderComponent"].getRect()
-			let rect_b = obj.getComponent("ColiderComponent").getRect()
+			let rect_a = this.getRect()
+			let rect_b = obj.getComponent("SolidComponent").getRect()
 			let rect_c = rect_a.getCommon(rect_b)
 
 			if(!rect_c.isNullSize())
@@ -226,14 +233,14 @@ class SortingComponent extends ComponentBase
 	update()
 	{
 		let a, b;
-		let rect_a = this.joined["TransformComponent"].getRect();
+		let rect_a = this.owner.hasComponent("ColiderComponent") ? this.owner.getComponent("ColiderComponent").getRect() : this.joined["TransformComponent"].getRect();
 		let objects = this.owner.parent.childs;
 		let index = objects.indexOf(this.owner)
 
 		for(let i in objects)
 		{
 			let obj = objects[i]
-			let rect_b = obj.getComponent("TransformComponent").getRect();
+			let rect_b = obj.hasComponent("ColiderComponent") ? obj.getComponent("ColiderComponent").getRect() : obj.getComponent("TransformComponent").getRect();
 			if((rect_a.bottom() < rect_b.bottom() && index > i) || (rect_a.bottom() > rect_b.bottom() && index < i))
 			{
 				this.owner.parent.swap(i, index);
@@ -260,3 +267,55 @@ class ItemTriggerComponent extends TriggerComponent
 		}
 	}
 }
+
+class FadeDistanceComponent extends ComponentBase
+{
+	object = null;
+	distance = 100;
+	offset = 100
+
+	init()
+	{
+		this.join("TransformComponent")
+		this.join("DrawableComponent")
+	}
+
+	update()
+	{
+		if(this.object)
+		{
+			let obj = Game.entities_named[this.object]
+
+			let rect_a = obj.getComponent("TransformComponent").getRect()
+			let rect_b = this.joined["TransformComponent"].getRect()
+
+			let opacity = (this.distance + (rect_a.bottom() - rect_b.bottom()  - this.offset)) / this.distance;
+			if(opacity >= 0) console.log(opacity)
+			this.joined["DrawableComponent"].opacity = opacity
+		}
+	}
+}
+/*
+class OverlapFadeComponent extends ComponentBase
+{
+	object = null;
+
+	init()
+	{
+		this.join("TransformComponent")
+		this.join("DrawableComponent")
+	}
+
+	update()
+	{
+		if(this.object)
+		{
+			let obj = Game.entities_named[this.object]
+
+			let rect_a = obj.getComponent("TransformComponent").getRect()
+			let rect_b = this.joined["TransformComponent"].getRect()
+
+			this.joined["DrawableComponent"].opacity = (this.distance + (rect_a.bottom() - rect_b.bottom()) - this.offset) / this.distance;
+		}
+	}
+}*/

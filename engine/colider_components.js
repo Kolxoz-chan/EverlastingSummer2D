@@ -3,7 +3,7 @@ class ColiderComponent extends ComponentBase
 {
 	name = "ColiderComponent"
 	objects = []
-	coliding = true;
+	coliding = false;
 
 	isIntersects(colider)
 	{
