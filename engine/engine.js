@@ -1,7 +1,6 @@
 /* Game class */
 class Game
 {
-
 	/* Arrays */
 	static entities = [];
 	static widgets = [];
@@ -15,7 +14,7 @@ class Game
 	static context = null;
 	static canvas = null;
 	static block = null;
-	static text = null;
+	static gui = null
 
 	/* Game state */
 	static state = NULL;
@@ -33,16 +32,25 @@ class Game
 	/* Public methods */
 	static init(id)
 	{
+		window.onerror = function(message, url, line, col) 
+		{
+		  alert(`${message}\n${url}, ${line}:${col}`);
+		};
+
 		/* Init canvas*/
 		Game.canvas = document.createElement("canvas");
 		Game.context = Game.canvas.getContext("2d");
+		Game.gui = document.createElement("div");
 
-		Game.canvas.offscreen = new OffscreenCanvas(0, 0);
+		Game.canvas.offscreen = document.createElement("canvas");
 		Game.offscreen = Game.canvas.offscreen.getContext("2d");
-
-		Game.text = document.createElement("span")
+		Game.gui.style.position = "absolute";
+		Game.gui.style.width = "100%"
+		Game.gui.style.height = "100%"
 
 		Game.block = document.getElementById(id);
+		Game.block.oncontextmenu = function(){return false}
+		Game.block.appendChild(Game.gui);
 		Game.block.appendChild(Game.canvas);
 	}
 
@@ -127,6 +135,7 @@ class Game
 	{
 		this.widgets.push(widget)
 		this.widgets_named[widget.name] = widget
+		Game.gui.appendChild(widget.getWidget())
 	}
 
 	static start()
@@ -191,7 +200,7 @@ class Time
 /* Camera class */
 class Camera
 {
-	static size = new Vector2(0, 0); 
+	static size = new Vector2(0, 0);
 	static position = new Vector2(0, 0);
 	static angle = 0;
 	static zoom = 1.0;
@@ -226,7 +235,7 @@ class Camera
 
 	static setPosition(point)
 	{
-		Camera.data.position = point;
+		Camera.data.position = new Vector2(point.x, point.y)
 		Camera.updated = true;
 	}
 
@@ -273,8 +282,11 @@ class Resources
 	static sounds = {}
 
 	static loading_counter = 0;
+	static resources_dir = ""
 	static textures_dir = "";
 	static sounds_dir = ""
+	static fonts_dir = ""
+	static game_dir = ""
 
 	static isLoaded()
 	{
@@ -289,6 +301,13 @@ class Resources
 			img.src = src;
 			return img;
 		})
+	}
+
+	static loadModule(src)
+	{
+		let script = document.createElement("script")
+		script.src = Resources.game_dir + src;
+		document.head.appendChild(script)
 	}
 
 	static loadResource(arr, func)
@@ -322,11 +341,22 @@ class Resources
 		if(relative) src = Resources.textures_dir + src;
 		Resources.textures[name].src = src
 		if(func) Resources.textures[name].onload = func;
+		Resources.textures[name].onerror = function()
+		{
+			alert("Image " + src + " not loaded!")
+		}
 	}
 
 	static loadAudio(name, src)
 	{
 		Resources.sounds[name] = new Audio(Resources.sounds_dir + src);
+	}
+
+	static loadFont(name, src)
+	{
+		let font = document.createElement("style")
+		font.innerHTML = "@font-face { font-family: " + name + "; src: url(" + Resources.fonts_dir + src + ");}"
+		document.head.appendChild(font)
 	}
 
 	static loadByURL(url, type = "text", func = function() {})
@@ -337,6 +367,10 @@ class Resources
 	    xhr.onload = function()
 	    {
 	        func(xhr.response)
+	    }
+	    xhr.onerror = function()
+	    {
+	    	alert("Resource " + url + " not loaded!")
 	    }
 	    xhr.send();
 	}

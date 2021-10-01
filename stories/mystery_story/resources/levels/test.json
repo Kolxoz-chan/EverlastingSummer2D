@@ -413,6 +413,11 @@
                  "name":"actor",
                  "properties":[
                         {
+                         "name":"ArrayPropertiesComponent",
+                         "type":"string",
+                         "value":""
+                        }, 
+                        {
                          "name":"CameraComponent",
                          "type":"string",
                          "value":""
@@ -446,8 +451,8 @@
                  "type":"",
                  "visible":true,
                  "width":80,
-                 "x":-832,
-                 "y":-2048
+                 "x":832,
+                 "y":320
                 }, 
                 {
                  "gid":101,
@@ -872,7 +877,7 @@
                         {
                          "name":"FadeDistanceComponent",
                          "type":"string",
-                         "value":"{\"object\" : \"actor\", \"distance\" : 200, \"offset\" : -600}"
+                         "value":"{\"object\" : \"actor\", \"distance\" : 200, \"offset\" : -300}"
                         }, 
                         {
                          "name":"RectColiderComponent",
@@ -888,8 +893,136 @@
                  "type":"",
                  "visible":true,
                  "width":320,
-                 "x":-832,
-                 "y":-1984
+                 "x":768,
+                 "y":-320
+                }, 
+                {
+                 "gid":305,
+                 "height":190,
+                 "id":140,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":-2496,
+                 "y":-960
+                }, 
+                {
+                 "gid":308,
+                 "height":196,
+                 "id":141,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":64,
+                 "y":-1856
+                }, 
+                {
+                 "gid":307,
+                 "height":190,
+                 "id":142,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":80,
+                 "x":2368,
+                 "y":-832
+                }, 
+                {
+                 "gid":306,
+                 "height":190,
+                 "id":143,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"DialogueTriggerComponent",
+                         "type":"string",
+                         "value":"{\"dialogue\" : Resources.dialogues[\"alice_dialogue\"]}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":512,
+                 "y":1152
+                }, 
+                {
+                 "gid":309,
+                 "height":64,
+                 "id":145,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":""
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":512,
+                 "y":320
+                }, 
+                {
+                 "gid":309,
+                 "height":64,
+                 "id":146,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":""
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":960,
+                 "y":448
+                }, 
+                {
+                 "gid":309,
+                 "height":64,
+                 "id":147,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ItemTriggerComponent",
+                         "type":"string",
+                         "value":""
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":896,
+                 "y":704
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -898,7 +1031,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":140,
+ "nextobjectid":148,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
@@ -994,6 +1127,71 @@
          "tilecount":1,
          "tileheight":704,
          "tilewidth":320
+        }, 
+        {
+         "columns":1,
+         "firstgid":305,
+         "image":"..\/textures\/characers\/slv_01.png",
+         "imageheight":190,
+         "imagewidth":64,
+         "margin":0,
+         "name":"slv_01",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":190,
+         "tilewidth":64
+        }, 
+        {
+         "columns":1,
+         "firstgid":306,
+         "image":"..\/textures\/characers\/2ch_01.png",
+         "imageheight":190,
+         "imagewidth":64,
+         "margin":0,
+         "name":"2ch_01",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":190,
+         "tilewidth":64
+        }, 
+        {
+         "columns":1,
+         "firstgid":307,
+         "image":"..\/textures\/characers\/miku_01.png",
+         "imageheight":190,
+         "imagewidth":80,
+         "margin":0,
+         "name":"miku_01",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":190,
+         "tilewidth":80
+        }, 
+        {
+         "columns":1,
+         "firstgid":308,
+         "image":"..\/textures\/characers\/unl_01.png",
+         "imageheight":196,
+         "imagewidth":64,
+         "margin":0,
+         "name":"unl_01",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":196,
+         "tilewidth":64
+        }, 
+        {
+         "columns":10,
+         "firstgid":309,
+         "image":"..\/textures\/tilesets\/items_01.png",
+         "imageheight":651,
+         "imagewidth":651,
+         "margin":1,
+         "name":"items_01",
+         "spacing":1,
+         "tilecount":100,
+         "tileheight":64,
+         "tilewidth":64
         }],
  "tilewidth":64,
  "type":"map",

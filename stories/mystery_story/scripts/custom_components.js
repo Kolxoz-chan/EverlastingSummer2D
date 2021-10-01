@@ -187,6 +187,7 @@ class SolidComponent extends ComponentBase
 class TriggerReactorComponent extends ComponentBase
 {
 	indicator = null;
+	key = "KeyE"
 
 	init()
 	{
@@ -216,8 +217,10 @@ class TriggerReactorComponent extends ComponentBase
 					}
 				}
 
-				let actor = objects[i].getComponent("TriggerComponent")
-				if(actor.action) actor.action(this)
+				if(trigger.action && (trigger.auto || Input.isKeyClicked(this.key))) 
+				{
+					trigger.action(this.owner)
+				}
 			}
 		}
 	}
@@ -259,11 +262,42 @@ class ItemTriggerComponent extends TriggerComponent
 		this.join("TransformComponent")
 	}
 
-	action()
+	action(obj)
 	{
-		if(Input.isKeyClicked("KeyE") || this.auto)
+		if(obj.hasComponent("ArrayPropertiesComponent"))
 		{
+			let arr = obj.getComponent("ArrayPropertiesComponent");
+			arr.add("inventory", this.owner)
 			this.owner.parent.deleteChild(this.owner)
+			InventoryWidget.updateInventory()
+		}
+	}
+}
+
+class DialogueTriggerComponent extends TriggerComponent
+{
+	hint = "Поговорить?"
+	auto = false
+	dialogue = null
+
+	init()
+	{
+		this.join("TransformComponent")
+	}
+
+	action(obj)
+	{
+		if(this.dialogue)
+		{
+			if(DialogueMenu.dialogue) 
+			{
+				let arr = DialogueMenu.dialogue.callNext()
+				if(arr.length <= 1) DialogueMenu.call(arr[0])
+			}
+			else
+			{
+				DialogueMenu.call(this.dialogue)
+			}
 		}
 	}
 }
@@ -290,7 +324,6 @@ class FadeDistanceComponent extends ComponentBase
 			let rect_b = this.joined["TransformComponent"].getRect()
 
 			let opacity = (this.distance + (rect_a.bottom() - rect_b.bottom()  - this.offset)) / this.distance;
-			if(opacity >= 0) console.log(opacity)
 			this.joined["DrawableComponent"].opacity = opacity
 		}
 	}

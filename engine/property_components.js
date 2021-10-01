@@ -78,3 +78,51 @@ class NumberPropertiesComponent extends PropertiesComponent
 		this.setValue(this.properties[name].min)
 	}
 }
+
+/* Properties Component */
+class ArrayPropertiesComponent extends PropertiesComponent
+{
+	add(name, value)
+	{
+		if(!this.properties[name]) this.properties[name] = []
+		this.properties[name].push(value)
+	}
+
+	get(name, index)
+	{
+		if(this.properties[name])
+		{
+			return this.properties[name][index]
+		}
+		return null
+	}
+
+	size(name)
+	{
+		if(this.properties[name])
+		{
+			return this.properties[name].length;
+		}
+		return 0;
+	}
+
+	set(name, index, value)
+	{
+		if(!this.properties[name]) this.properties[name] = []
+		this.properties[name][index] = value;
+	}
+
+	index(name, value)
+	{
+		if(this.properties[name])
+		{
+			return this.properties[name].indexOf(value)
+		}
+		return -1
+	}
+
+	has(name, value)
+	{
+		return this.index(value) >= 0;
+	}
+}

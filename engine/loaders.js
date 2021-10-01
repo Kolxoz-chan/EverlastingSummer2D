@@ -1,6 +1,5 @@
 class TiledLoader
 {
-  static resources_url = "";
   static onLoaded = null;
   static tilesize = new Vector2(0, 0);
 
@@ -67,7 +66,9 @@ class TiledLoader
           }
         }
       }
-      Resources.addTexture(name, Game.canvas.offscreen.transferToImageBitmap());
+      let img = new Image()
+      img.src = Game.canvas.offscreen.toDataURL()
+      Resources.addTexture(name, img);
     }
 
     return layer;
@@ -114,7 +115,10 @@ class TiledLoader
   {
     Game.resetOffscreen(tile.rect.getSize())
     Game.offscreen.drawImage(Resources.textures[tile.name], tile.rect.x, tile.rect.y, tile.rect.w, tile.rect.h,  0, 0, tile.rect.w, tile.rect.h)
-    Resources.addTexture(tile.texture, Game.canvas.offscreen.transferToImageBitmap());
+
+    let img = new Image()
+    img.src = Game.canvas.offscreen.toDataURL()
+    Resources.addTexture(tile.texture, img);
   }
 
   static loadTileset(tileset)
@@ -138,7 +142,7 @@ class TiledLoader
     let level = new Entity(name)
     TiledLoader.tilesets = [] 
 
-    Resources.loadByURL(TiledLoader.resources_url + "levels/" + name + ".json", "json", function(data)
+    Resources.loadByURL(Resources.resources_url + "levels/" + name + ".json", "json", function(data)
     {
       let counter = data.tilesets.length
       TiledLoader.tilesize = new Vector2(data.tilewidth, data.tileheight)
@@ -150,7 +154,7 @@ class TiledLoader
         TiledLoader.loadTileset(tileset)
 
         // Load tiles
-        Resources.loadTexture(tileset.name, tileset.image.replace("..", TiledLoader.resources_url), false, function()
+        Resources.loadTexture(tileset.name, tileset.image.replace("..", Resources.resources_url), false, function()
         {
           // Loading data after loading tilesets
           counter--;

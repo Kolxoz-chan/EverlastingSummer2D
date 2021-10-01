@@ -15,42 +15,14 @@
 		<script src="engine/action_components.js"></script>
 		<script src="engine/colider_components.js"></script>
 		<script src="engine/mouse_components.js"></script>
-		<script src="custom_components.js"></script>
+		<script src="engine/property_components.js"></script>
 		<script src="engine/engine.js"></script>
 	</head>
+
 	<body style="margin: 0; overflow: hidden; background-color: black;">
+		
 		<div id="game-block"><div>
+		<script src="main.js" defer></script>
 
-		<script type="text/javascript">
-		/* --- Init game -------------------------------------------------------  */
-		Game.init("game-block");
-		Game.settings.style = "margin: auto; display: block;"
-		Game.resetSettings()
-		Game.setEventHandlers(['keydown', 'keyup'])
-		Game.setSize(new Vector2(1280, 720))
-
-		/* --- Init prefabs -------------------------------------------------------  */
-		//TiledLoader.resources_url = "https://kolxoz-chan.github.io/EverlastingSummer2D/resources/";
-		//Resources.textures_dir = "https://kolxoz-chan.github.io/EverlastingSummer2D/resources/textures/"
-		TiledLoader.resources_url = "resources/";
-		Resources.textures_dir = "resources/textures/"
-
-		let level = TiledLoader.loadLevel("test", true)
-		TiledLoader.onLoaded = function(level)
-		{
-			let action_butt = new Entity("action_button")
-			action_butt.addComponent("TransformComponent", {"position" : new Vector2(5, -30)})
-			action_butt.addComponent("TextComponent", {"font" : "16px Arial", "autodraw" : false})
-			Game.entities_named["actor"].addChild(action_butt)
-
-
-
-			Game.addEntity(level)
-		}
-
-
-		/* --- Start game -------------------------------------------------------- */
-		Game.start();
-		</script>
 	</body>
 </html>
