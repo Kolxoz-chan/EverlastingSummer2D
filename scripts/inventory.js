@@ -6,7 +6,7 @@ class InventoryWidget extends WindowsSection
 	{
 		let main = this.addWindow("main", new Frame(null, "text-align: right;"))
 		main.setDisplay("inline-block")
-		main.setSize(99, 1, "%")
+		main.setSize(99, "10px", "%")
 		Game.addWidget(main)
 		this.addAction("main", this.updateInventory)
 
@@ -35,7 +35,7 @@ class InventoryWidget extends WindowsSection
 					let drawable = item.getComponent("DrawableComponent")
 					let texture = Resources.getTexture(drawable.texture)
 					let widget = this.slots[i].getWidget()
-					widget.innerHTML = "<img style='width: 100%; height: 100%;' src='" + texture.src  + "'/>"
+					widget.innerHTML = "<img style='width: 100%; height: 100%; margin:0;' src='" + texture.src  + "'/>"
 				}
 			}
 		}

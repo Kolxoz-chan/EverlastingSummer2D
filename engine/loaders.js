@@ -1,5 +1,6 @@
 class TiledLoader
 {
+  static level = null
   static onLoaded = null;
   static tilesize = new Vector2(0, 0);
 
@@ -62,6 +63,7 @@ class TiledLoader
             let tile = TiledLoader.tilesets[item-1]
             let pos = new Vector2(TiledLoader.tilesize.x * x, TiledLoader.tilesize.y * y)
             //if(pos.y != 0) pos.y -= tile.rect.h;
+            //alert(Resources.textures[tile.texture].style.background)
             Game.offscreen.drawImage(Resources.textures[tile.texture], pos.x, pos.y, tile.rect.w, tile.rect.h)
           }
         }
@@ -77,7 +79,7 @@ class TiledLoader
   static loadObjectLayer(info)
   {
    let layer = new Entity(info.name)
- 
+
     for(let i in info.objects)
     {
       let obj = info.objects[i]
@@ -101,7 +103,7 @@ class TiledLoader
   {
     try
     {
-      let x = eval("() => { return "+ code +"; }"); 
+      let x = eval("() => { return "+ code +"; }");
       return x();
     }
     catch(err)
@@ -113,12 +115,15 @@ class TiledLoader
 
   static loadTile(tile)
   {
+
     Game.resetOffscreen(tile.rect.getSize())
     Game.offscreen.drawImage(Resources.textures[tile.name], tile.rect.x, tile.rect.y, tile.rect.w, tile.rect.h,  0, 0, tile.rect.w, tile.rect.h)
 
     let img = new Image()
     img.src = Game.canvas.offscreen.toDataURL()
     Resources.addTexture(tile.texture, img);
+
+    return img
   }
 
   static loadTileset(tileset)
@@ -136,16 +141,69 @@ class TiledLoader
     }
   }
 
+  static loadLayers(data, use_chunks)
+  {
+    // Loading layers
+    for(let i in data.layers)
+    {
+      let layer = null;
+      let lay = data.layers[i]
+
+      if(lay.type == "tilelayer")
+      {
+        if(use_chunks)
+        {
+          layer = TiledLoader.loadChunkLayer(lay, TiledLoader.tilesize.x * 16, TiledLoader.tilesize.y * 16)
+        }
+        else
+        {
+          layer = TiledLoader.loadMatrixLayer(lay, TiledLoader.tilesize.x, TiledLoader.tilesize.y)
+        }
+      }
+      else if(lay.type == "objectgroup")
+      {
+        layer = TiledLoader.loadObjectLayer(lay)
+      }
+
+      if(layer) TiledLoader.level.addChild(layer)
+    }
+
+    // Callback
+    if(TiledLoader.onLoaded) TiledLoader.onLoaded(TiledLoader.level)
+  }
+
+  static loadingData(data, use_chunks)
+  {
+    let tile_counter = 0;
+
+    for(let i in TiledLoader.tilesets)
+    {
+      let img = TiledLoader.loadTile(TiledLoader.tilesets[i])
+      if(!img.compleate)
+      {
+        tile_counter++
+        img.onload = function()
+        {
+          tile_counter--
+          if(tile_counter <= 0)
+          {
+            TiledLoader.loadLayers(data, use_chunks)
+          }
+        }
+      }
+    }
+  }
+
   static loadLevel(name, use_chunks = false)
   {
     // Init level
-    let level = new Entity(name)
-    TiledLoader.tilesets = [] 
+    TiledLoader.level = new Entity(name)
+    TiledLoader.tilesets = []
 
     Resources.loadByURL(Resources.resources_url + "levels/" + name + ".json", "json", function(data)
     {
-      let counter = data.tilesets.length
       TiledLoader.tilesize = new Vector2(data.tilewidth, data.tileheight)
+      let counter = data.tilesets.length
 
       // Loading tilesets
       for(let i in data.tilesets)
@@ -160,43 +218,12 @@ class TiledLoader
           counter--;
           if(counter <= 0)
           {
-            for(let i in TiledLoader.tilesets)
-            {
-              TiledLoader.loadTile(TiledLoader.tilesets[i])
-            }
-
-            // Loading layers
-            for(let i in data.layers)
-            {
-              let layer = null;
-              let lay = data.layers[i]
-
-              if(lay.type == "tilelayer")
-              {
-                if(use_chunks)
-                {
-                  layer = TiledLoader.loadChunkLayer(lay, TiledLoader.tilesize.x * 16, TiledLoader.tilesize.y * 16)
-                }
-                else
-                {
-                  layer = TiledLoader.loadMatrixLayer(lay, TiledLoader.tilesize.x, TiledLoader.tilesize.y)
-                }
-              }
-              else if(lay.type == "objectgroup")
-              {
-                layer = TiledLoader.loadObjectLayer(lay)
-              }
-
-              if(layer) level.addChild(layer)
-            }
-
-            // Callback
-            if(TiledLoader.onLoaded) TiledLoader.onLoaded(level)
+            TiledLoader.loadingData(data, use_chunks)
           }
         })
       }
     })
 
-    return level;
+    return TiledLoader.level;
   }
 }
