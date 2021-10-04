@@ -278,6 +278,7 @@ class Resources
 	static onLoad = null
 
 	static textures = {}
+	static bitmaps = {}
 	static prefabs = {}
 	static sounds = {}
 

@@ -144,7 +144,7 @@ class ImageComponent extends DrawableComponent
 
 	draw(position, size)
 	{
-		let image = Resources.getTexture(this.texture)
+		let image = Resources.bitmaps[this.texture] ? Resources.bitmaps[this.texture]  : Resources.getTexture(this.texture)
 		if(image)
 		{
 			Game.context.drawImage(image, position.x, position.y);

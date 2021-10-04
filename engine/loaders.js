@@ -71,6 +71,15 @@ class TiledLoader
       let img = new Image()
       img.src = Game.canvas.offscreen.toDataURL()
       Resources.addTexture(name, img);
+      img.onload = function(data)
+      {
+        Promise.all([createImageBitmap(data)]).then(function(sprites)
+        {
+          Resources.bitmaps[name] = sprites[0]
+          Resources.textures[name] = null;
+        })
+      }
+      
     }
 
     return layer;
@@ -123,6 +132,11 @@ class TiledLoader
     img.src = Game.canvas.offscreen.toDataURL()
     Resources.addTexture(tile.texture, img);
 
+    Promise.all([createImageBitmap(Resources.textures[tile.name], 0, 0, tile.rect.w, tile.rect.h)]).then(function(sprites)
+    {
+      Resources.bitmaps[tile.texture] = sprite[0]
+    })
+
     return img
   }
 
@@ -172,7 +186,7 @@ class TiledLoader
     if(TiledLoader.onLoaded) TiledLoader.onLoaded(TiledLoader.level)
   }
 
-  static loadingData(data, use_chunks)
+  static loadData(data, use_chunks)
   {
     let tile_counter = 0;
 
@@ -218,7 +232,7 @@ class TiledLoader
           counter--;
           if(counter <= 0)
           {
-            TiledLoader.loadingData(data, use_chunks)
+            TiledLoader.loadData(data, use_chunks)
           }
         })
       }
