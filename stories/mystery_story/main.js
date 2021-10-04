@@ -14,4 +14,5 @@ TiledLoader.onLoaded = function(level)
 	Game.entities_named["actor"].addChild(action_butt)
 
 	Game.addEntity(level)
+	InventoryWidget.init()
 }

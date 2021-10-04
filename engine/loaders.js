@@ -132,9 +132,9 @@ class TiledLoader
     img.src = Game.canvas.offscreen.toDataURL()
     Resources.addTexture(tile.texture, img);
 
-    Promise.all([createImageBitmap(Resources.textures[tile.name], 0, 0, tile.rect.w, tile.rect.h)]).then(function(sprites)
+    Promise.all([createImageBitmap(Resources.textures[tile.name], tile.rect.x, tile.rect.y, tile.rect.w, tile.rect.h)]).then(function(sprites)
     {
-      Resources.bitmaps[tile.texture] = sprite[0]
+      Resources.bitmaps[tile.texture] = sprites[0]
     })
 
     return img

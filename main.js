@@ -18,7 +18,6 @@ Resources.loadModule("scripts/inventory.js")
 
 setTimeout(() =>
 {
-	InventoryWidget.init()
 	MainMenu.init()
 	DialogueMenu.init()
 
