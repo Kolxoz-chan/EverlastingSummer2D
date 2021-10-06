@@ -217,7 +217,7 @@ class TriggerReactorComponent extends ComponentBase
 					}
 				}
 
-				if(trigger.action && (trigger.auto || Input.isKeyClicked(this.key))) 
+				if(trigger.action && (trigger.auto || Input.isKeyClicked(this.key)))
 				{
 					trigger.action(this.owner)
 				}
@@ -254,7 +254,7 @@ class SortingComponent extends ComponentBase
 
 class ItemTriggerComponent extends TriggerComponent
 {
-	hint = "Взять?"
+	hint = "Взять (E)"
 	auto = false
 
 	init()
@@ -276,7 +276,7 @@ class ItemTriggerComponent extends TriggerComponent
 
 class DialogueTriggerComponent extends TriggerComponent
 {
-	hint = "Поговорить?"
+	hint = "Поговорить (E)"
 	auto = false
 	dialogue = null
 
@@ -289,7 +289,7 @@ class DialogueTriggerComponent extends TriggerComponent
 	{
 		if(this.dialogue)
 		{
-			if(DialogueMenu.dialogue) 
+			if(DialogueMenu.dialogue)
 			{
 				let arr = DialogueMenu.dialogue.callNext()
 				if(arr.length <= 1) DialogueMenu.call(arr[0])
@@ -298,6 +298,40 @@ class DialogueTriggerComponent extends TriggerComponent
 			{
 				DialogueMenu.call(this.dialogue)
 			}
+		}
+	}
+}
+
+class DoorTriggerComponent extends TriggerComponent
+{
+	hint = "Зайти (E)"
+	auto = false
+	level = null
+
+	init()
+	{
+		this.join("TransformComponent")
+	}
+
+	action(obj)
+	{
+		if(this.level)
+		{
+			Game.addTask(() => 
+			{
+				let lvl = Game.entities_named[this.level]
+				if(lvl)
+				{
+					if(Game.current_entity) Game.current_entity.setEnabled(false);
+					Game.current_entity = lvl;
+					Game.current_entity.setEnabled(true);
+				}
+				else
+				{
+					if(Game.current_entity) Game.current_entity.setEnabled(false);
+					TiledLoader.loadLevel(this.level)
+				}
+			})
 		}
 	}
 }

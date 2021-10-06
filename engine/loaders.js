@@ -79,7 +79,6 @@ class TiledLoader
           Resources.textures[name] = null;
         })
       }
-      
     }
 
     return layer;
@@ -92,11 +91,20 @@ class TiledLoader
     for(let i in info.objects)
     {
       let obj = info.objects[i]
-      let tile = TiledLoader.tilesets[obj.gid - 1]
-      //alert(obj.width + "x" + obj.height)
       let ent = new Entity(obj.name)
-      ent.addComponent("TransformComponent", {"position" : new Vector2(obj.x, obj.y - obj.height), "size" : new Vector2(obj.width, obj.height)});
-      ent.addComponent("ImageComponent", {"texture" : tile.texture});
+      let obj_y = obj.y;
+
+      // if object has texture
+      if(obj.gid)
+      {
+        let tile = TiledLoader.tilesets[obj.gid - 1]
+        ent.addComponent("ImageComponent", {"texture" : tile.texture});
+        obj_y = obj.y - obj.height
+      }
+
+      ent.addComponent("TransformComponent", {"position" : new Vector2(obj.x, obj_y), "size" : new Vector2(obj.width, obj.height)});
+
+      // properties enumeration
       for(let i in obj.properties)
       {
         let prop = obj.properties[i]

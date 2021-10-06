@@ -1023,6 +1023,28 @@
                  "width":64,
                  "x":896,
                  "y":704
+                }, 
+                {
+                 "height":192,
+                 "id":150,
+                 "name":"exit",
+                 "properties":[
+                        {
+                         "name":"DoorTriggerComponent",
+                         "type":"string",
+                         "value":"{\"level\" : \"counselor_house\"}"
+                        }, 
+                        {
+                         "name":"RectColiderComponent",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":512,
+                 "y":-512
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1031,7 +1053,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":149,
+ "nextobjectid":151,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",

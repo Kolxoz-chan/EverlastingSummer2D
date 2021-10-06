@@ -4,9 +4,9 @@ class InventoryWidget extends WindowsSection
 
 	static init()
 	{
-		let main = this.addWindow("main", new Frame(null, "text-align: right;"))
+		let main = this.addWindow("main", new Frame(null, "text-align: center; margin-top: 10px;"))
 		main.setDisplay("inline-block")
-		main.setSize(99, "10px", "%")
+		main.setSize(100, 1, "%")
 		Game.addWidget(main)
 		this.addAction("main", this.updateInventory)
 

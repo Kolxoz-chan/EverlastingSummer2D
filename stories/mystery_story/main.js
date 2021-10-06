@@ -3,9 +3,7 @@ Resources.resources_url = Resources.game_dir + "resources/";
 Resources.textures_dir = Resources.resources_url + "textures/"
 Resources.fonts_dir = Resources.resources_url + "fonts/"
 
-Resources.loadModule("scripts/custom_components.js")
-
-let level = TiledLoader.loadLevel("test", true)
+let level = TiledLoader.loadLevel("counselor_house", true)
 TiledLoader.onLoaded = function(level)
 {
 	let action_butt = new Entity("action_button")
@@ -14,5 +12,4 @@ TiledLoader.onLoaded = function(level)
 	Game.entities_named["actor"].addChild(action_butt)
 
 	Game.addEntity(level)
-	InventoryWidget.init()
 }

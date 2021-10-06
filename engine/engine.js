@@ -4,12 +4,14 @@ class Game
 	/* Arrays */
 	static entities = [];
 	static widgets = [];
+	static tasks = [];
 
 	/* Dicts */
 	static widgets_named = {};
 	static entities_named = {};
 
 	/* Objsect */
+	static current_entity = null
 	static offscreen = null
 	static context = null;
 	static canvas = null;
@@ -89,12 +91,18 @@ class Game
 
 	static addEntity(obj)
 	{
+		this.current_entity = obj
 		if(obj.name) Game.entities_named[obj.name] = obj;
 		Game.entities.push(obj);
 		obj.reset();
 		obj.init();
 
 		return obj;
+	}
+
+	static addTask(func)
+	{
+		this.tasks.push(func)
 	}
 
 	static resetCursor()
@@ -160,6 +168,17 @@ class Game
 			{
 				Time.update()
 				Input.update()
+
+				// Update tasks
+				if(Game.tasks.length > 0)
+				{
+					for(let i in Game.tasks)
+					{
+						Game.tasks[i]();
+					}
+					Game.tasks = []
+				}
+
 				Game.update()
 				Camera.update()
 
