@@ -9,6 +9,7 @@ class Game
 	/* Dicts */
 	static widgets_named = {};
 	static entities_named = {};
+	static memory = {};
 
 	/* Objsect */
 	static current_entity = null
