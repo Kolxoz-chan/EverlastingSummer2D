@@ -139,6 +139,8 @@ class DoorTriggerComponent extends TriggerComponent
 	hint = "Зайти (E)"
 	auto = false
 	level = null
+	container = null;
+	position = new Vector2(0, 0)
 
 	init()
 	{
@@ -149,19 +151,30 @@ class DoorTriggerComponent extends TriggerComponent
 	{
 		if(this.level)
 		{
+			obj.parent.deleteChild(obj)
+			obj.getComponent("TransformComponent").setPosition(this.position)
+			
 			Game.addTask(() => 
 			{
-				let lvl = Game.entities_named[this.level]
+				let lvl = Game.entities_named[this.level];
 				if(lvl)
 				{
 					if(Game.current_entity) Game.current_entity.setEnabled(false);
 					Game.current_entity = lvl;
 					Game.current_entity.setEnabled(true);
+					let container = lvl.getNamed(this.container)
+					container.addChild(obj)
 				}
 				else
 				{
 					if(Game.current_entity) Game.current_entity.setEnabled(false);
+					
 					TiledLoader.loadLevel(this.level)
+					TiledLoader.onLoaded = (lvl) =>
+					{
+						let container = lvl.getNamed(this.container)
+						container.addChild(obj)
+					}
 				}
 			})
 		}

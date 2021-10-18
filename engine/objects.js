@@ -35,6 +35,7 @@ class Entity
 	childs = []
 	delete_queue = []
 	swap_queue = []
+	entities_named = []
 	// onUpdate = null;
 
 	constructor(name = null)
@@ -115,9 +116,24 @@ class Entity
 		return component;
 	}
 
+	addNamed(obj)
+	{
+		this.entities_named[obj.name] = obj;
+		if(this.parent) this.parent.addNamed(obj)
+	}
+
+	getNamed(name)
+	{
+		return this.entities_named[name];
+	}
+
 	addChild(obj)
 	{
-		if(obj.name) Game.entities_named[obj.name] = obj;
+		if(obj.name)
+		{
+			Game.entities_named[obj.name] = obj;
+			this.addNamed(obj)
+		}
 		this.childs.push(obj)
 		obj.parent = this;
 		obj.reset();
@@ -127,6 +143,11 @@ class Entity
 	deleteChild(obj)
 	{
 		this.delete_queue.push(obj);
+	}
+
+	hasChild(obj)
+	{
+		return this.childs.indexOf(obj) != -1
 	}
 
 	hasComponent(name)

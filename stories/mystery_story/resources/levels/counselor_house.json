@@ -123,7 +123,7 @@
                         {
                          "name":"DoorTriggerComponent",
                          "type":"string",
-                         "value":"{\"hint\" : \"\u0412\u044b\u0439\u0442\u0438 (E)\", \"level\" : \"test\"}"
+                         "value":"{\n\"hint\" : \"\u0412\u044b\u0439\u0442\u0438 (E)\", \n\"level\" : \"test\",\n\"container\" : \"objects\",\n\"position\" : new Vector2(550, -420)\n}"
                         }, 
                         {
                          "name":"RectColiderComponent",

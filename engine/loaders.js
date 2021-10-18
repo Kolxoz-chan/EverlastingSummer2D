@@ -191,6 +191,7 @@ class TiledLoader
     }
 
     // Callback
+    Game.addEntity(TiledLoader.level)
     if(TiledLoader.onLoaded) TiledLoader.onLoaded(TiledLoader.level)
   }
 
@@ -216,7 +217,7 @@ class TiledLoader
     }
   }
 
-  static loadLevel(name, use_chunks = false)
+  static loadLevel(name, use_chunks = true)
   {
     // Init level
     TiledLoader.level = new Entity(name)
@@ -240,7 +241,7 @@ class TiledLoader
           counter--;
           if(counter <= 0)
           {
-            TiledLoader.loadData(data, use_chunks)
+            TiledLoader.loadData(data, true)
           }
         })
       }

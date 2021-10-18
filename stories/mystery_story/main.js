@@ -10,6 +10,4 @@ TiledLoader.onLoaded = function(level)
 	action_butt.addComponent("TransformComponent", {"position" : new Vector2(5, -30)})
 	action_butt.addComponent("TextComponent", {"font" : "16px Arial", "autodraw" : false})
 	Game.entities_named["actor"].addChild(action_butt)
-
-	Game.addEntity(level)
 }
