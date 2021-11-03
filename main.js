@@ -33,3 +33,6 @@ setTimeout(() =>
 
 	Game.start();
 }, 1000)
+
+let comp = new TimerComponent()
+alert(JSON.stringify(comp.default_properties))

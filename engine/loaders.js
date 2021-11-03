@@ -189,10 +189,6 @@ class TiledLoader
 
       if(layer) TiledLoader.level.addChild(layer)
     }
-
-    // Callback
-    Game.addEntity(TiledLoader.level)
-    if(TiledLoader.onLoaded) TiledLoader.onLoaded(TiledLoader.level)
   }
 
   static loadData(data, use_chunks)
@@ -211,6 +207,8 @@ class TiledLoader
           if(tile_counter <= 0)
           {
             TiledLoader.loadLayers(data, use_chunks)
+            Game.addEntity(TiledLoader.level)
+            if(TiledLoader.onLoaded) TiledLoader.onLoaded(TiledLoader.level)
           }
         }
       }

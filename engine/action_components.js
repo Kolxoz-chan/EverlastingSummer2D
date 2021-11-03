@@ -1,10 +1,13 @@
 /* Timer component*/
 class TimerComponent extends ComponentBase
 {
-	enabled = true;
-	time = 60.0
-	//action = null;
-	//tic = null;
+	default_properties = 
+	{
+		"enabled" : true,
+		"time" : 60.0,
+		"action" : null,
+		"tic" : null
+	}
 
 	getTime()
 	{
@@ -29,9 +32,12 @@ class TimerComponent extends ComponentBase
 /* Attribute Change Event */
 class AttributeEventComponent extends ComponentBase
 {
-	attribute = null
-	value = null
-	// action = null
+	default_properties = 
+	{
+		"attribute" : null,
+		"action" : null,
+		"value" : null
+	}
 
 	init()
 	{
@@ -50,10 +56,7 @@ class AttributeEventComponent extends ComponentBase
 /* Radius Scanner */
 class RadiusScannerComponent extends ComponentBase
 {
-	radius = 50;
-	container = null;
-	// onRegister = null
-
+	 
 	init()
 	{
 		this.join("TransformComponent")
